@@ -1,0 +1,88 @@
+# yatripatel.in
+
+A portfolio that opens by asking you for something first.
+
+Loading → `hi, welcome to my world` → you write a note on a paper card →
+you press **enter** and watch it get tossed onto a pile of everyone else's.
+The pile is also the wallpaper behind the composer, at 12% opacity, so you are
+always writing on top of what is already there.
+
+## Running it
+
+```bash
+npm install
+npm run dev      # http://localhost:5173
+npm run build    # -> dist/
+npm run preview
+```
+
+Pushing to `main` builds and deploys to GitHub Pages
+(`.github/workflows/static.yml`). `public/CNAME` keeps the custom domain.
+
+## The flow
+
+| Phase      | What happens                                                                  |
+| ---------- | ----------------------------------------------------------------------------- |
+| `loading`  | A blank deck riffles itself while `document.fonts.ready` settles.              |
+| `welcome`  | Two lines type themselves over the faint pile. Enter moves on.                 |
+| `compose`  | The Figma card, live: name, handwriting textarea, pen and eraser.              |
+| `dropping` | The finished card lifts, arcs and tumbles into the slot the pile reserved.     |
+| `gallery`  | The whole pile, scattered. Hover tilts a card, clicking one opens it.          |
+
+Enter submits from anywhere on the composer; Shift+Enter is a newline.
+
+## How it is put together
+
+```
+src/
+  components/
+    NoteCard.tsx      the card itself, at Figma's exact 497x304 geometry
+    Compose.tsx       the writing screen
+    DrawingLayer.tsx  signature_pad ink surface (pen + destination-out eraser)
+    PenToolbar.tsx    the 76x31 pill from the design
+    FlyingCard.tsx    the toss
+    Pile.tsx          the gallery AND the faint backdrop — same component
+    NoteLightbox.tsx  one note, read properly, downloadable as PNG
+  lib/
+    layout.ts         where every card lands, and where it lands on screen
+    paper.ts          the crumpled-paper texture
+    random.ts         seeded PRNG — the pile looks random but never moves
+    store.ts          localStorage notes + seed pile
+    exportCard.ts     html-to-image, with the handwriting font inlined
+```
+
+### The pile never reshuffles
+
+Every placement comes from a seeded PRNG keyed on the note's own id, laid out on
+a golden-angle spiral with jitter (`lib/layout.ts`). Reload the page and each
+card is exactly where you left it; add a note and it lands one ring further out,
+on top. `cardViewportCenter()` is what lets the drop animation aim at a card's
+final resting place without measuring the DOM mid-transition — the flying card
+and its reserved slot end up pixel-identical.
+
+### The paper texture
+
+Figma layers a raster photo (`PAPER TEXTURE - 02`) over each card at 51%
+opacity. That bitmap is not in this repo, so `lib/paper.ts` synthesises the same
+thing with SVG filters: fractal noise lit from the upper left for the folds, a
+high-frequency pass for the fibre. It is baked into a data URI once and used as
+a plain `background-image`, because a live `filter:` per card would be
+re-evaluated for every card in the pile.
+
+**To use the real bitmap instead:** drop it in `public/` and point
+`PAPER_TEXTURE_URL` at it. Nothing else changes.
+
+### Where a backend would plug in
+
+Notes live in `localStorage` today (`lib/store.ts`). `loadNotes` / `persistNotes`
+/ `createNote` are the whole surface a real gallery API would need to replace.
+Every note also carries `snapshot`, a PNG data URL of the finished card produced
+off-screen by `ExportStage` — that is the thing you would POST. Snapshots are
+deliberately stripped before writing to `localStorage`; a handful of them would
+blow past the ~5MB quota.
+
+## Design source
+
+Figma `कام` — compose screen `232:5270`, pile `218:5227`. Card is `#fff9c0`,
+497x304, radius 10; body text is QEBradenHill at 20px, offsets 30/24, 30/73
+(262 wide), 239/257. Labels are Fragment Mono 12px.
