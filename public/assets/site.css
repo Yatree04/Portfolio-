@@ -10,8 +10,10 @@
   --plum: #705b77;         /* section headings            */
   --card-title: #482552;   /* card headings   (89:6280)   */
   --card-eyebrow: #636363; /* card eyebrows   (89:6279)   */
-  --plum-deep: #5b445b;    /* active nav pill         */
-  --muted: #8c8a98;        /* eyebrows, body copy     */
+  --plum-deep: #452e6e;    /* active nav pill (89:6331)   */
+  --nav-rest: #4e4967;     /* nav items at rest (89:6333) */
+  --heading: #452e6e;      /* "But What do I do?" (89:6324) */
+  --muted: #8c8a98;        /* ledes, footer nav           */
   --body: #646464;         /* hero subtitle           */
   --card-bg: #f3f3f4;
   --card-placeholder: #4c4c4c;
@@ -128,7 +130,7 @@ a { text-decoration: none; color: inherit; }
   font-size: 14.5px;
   letter-spacing: -0.5px;
   line-height: 22px;
-  color: var(--muted);
+  color: var(--nav-rest);
   white-space: nowrap;
 }
 
@@ -191,13 +193,23 @@ a { text-decoration: none; color: inherit; }
 }
 
 .works h2 {
-  margin: 0 0 44px;
+  margin: 0 0 2px;
   font-family: var(--display);
-  font-weight: 300;
+  font-weight: 700;                /* Google Sans Flex Bold */
   font-size: 24px;
   line-height: 30px;
   letter-spacing: 0.7px;
-  color: var(--plum);
+  color: var(--heading);
+}
+
+/* "Some of my featured works...." — sits straight under the heading */
+.works-lede {
+  margin: 0 0 40px;
+  font-family: var(--mono-alt);
+  font-size: 15px;
+  line-height: 22px;
+  letter-spacing: -0.5px;
+  color: var(--muted);
 }
 
 .works-grid {
@@ -424,7 +436,7 @@ a { text-decoration: none; color: inherit; }
   .hero h1 { font-size: 26px; line-height: 30px; }
   .hero p { font-size: 17px; line-height: 25px; }
   .works { padding-top: 80px; }
-  .works h2 { font-size: 26px; margin-bottom: 44px; }
+  .works h2 { font-size: 26px; }
   .card-title { font-size: 26px; line-height: 32px; }
   .card-desc { font-size: 17px; line-height: 25px; }
   .footer-copy { font-size: 16px; line-height: 32px; }

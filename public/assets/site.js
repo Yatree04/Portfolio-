@@ -91,7 +91,11 @@
       '<p class="footer-copy">© 2026, Vibe coded in Antigravity and Claude Code by me :)</p>' +
       '<nav class="footer-nav" aria-label="Footer">' +
         '<a href="' + SITE + '">HOME</a>' +
-        NAV.concat([MAILBOX]).map(function (item) {
+        /* The footer carries the onward pages only — works is where the
+           header pill already is (89:6246). */
+        NAV.filter(function (item) {
+          return item.id !== "works";
+        }).map(function (item) {
           return '<a href="' + item.href + '">' + item.label + "</a>";
         }).join("") +
       "</nav>" +

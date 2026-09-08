@@ -42,31 +42,7 @@
  */
 window.WORKS_PROJECTS = [
   {
-    // https://www.behance.net/gallery/255227267
-    image: "../assets/works/paalan.png",
-    embed: "https://www.behance.net/embed/project/255227267?ilo0=1",
-    url: "https://www.behance.net/gallery/255227267",
-    eyebrow: "",
-    title: "Paalan",
-  },
-  {
-    // https://www.behance.net/gallery/255342321
-    image: "../assets/works/trail.png",
-    embed: "https://www.behance.net/embed/project/255342321?ilo0=1",
-    url: "https://www.behance.net/gallery/255342321",
-    eyebrow: "Trail | Self Exploratory Project Concept | July 2026",
-    title: "Designing for preserved context to make resuming interrupted work effortless",
-  },
-  {
-    // https://www.behance.net/gallery/255274663
-    image: "../assets/works/google-stitch.png",
-    embed: "https://www.behance.net/embed/project/255274663?ilo0=1",
-    url: "https://www.behance.net/gallery/255274663",
-    eyebrow: "Ergonomic Evaluation & Redesign | 3 weeks",
-    title: "Google Stitch",
-  },
-  {
-    // https://www.behance.net/gallery/255306649
+    // 89:6276 — https://www.behance.net/gallery/255306649
     image: "../assets/works/pacific-cascade.png",
     embed: "https://www.behance.net/embed/project/255306649?ilo0=1",
     url: "https://www.behance.net/gallery/255306649",
@@ -74,26 +50,51 @@ window.WORKS_PROJECTS = [
     title: "The Pacific Cascade",
   },
   {
-    // https://www.behance.net/gallery/255261283
+    // 273:5264 — https://www.behance.net/gallery/255274663
+    image: "../assets/works/google-stitch.png",
+    embed: "https://www.behance.net/embed/project/255274663?ilo0=1",
+    url: "https://www.behance.net/gallery/255274663",
+    eyebrow: "Ergonomic Evaluation & Redesign | 3 weeks",
+    title: "Google Stitch Redesign",
+  },
+  {
+    // 274:5267 — https://www.behance.net/gallery/255227267
+    image: "../assets/works/paalan.png",
+    embed: "https://www.behance.net/embed/project/255227267?ilo0=1",
+    url: "https://www.behance.net/gallery/255227267",
+    eyebrow: "",
+    title: "Paalan | Animal Welfare App",
+  },
+  {
+    // 274:5270 — https://www.behance.net/gallery/255342321
+    image: "../assets/works/trail.png",
+    embed: "https://www.behance.net/embed/project/255342321?ilo0=1",
+    url: "https://www.behance.net/gallery/255342321",
+    eyebrow: "Self Exploratory Project Concept | July 2026",
+    title: "Trails | Context Preservation Tool",
+  },
+  {
+    // 274:5277 — https://www.behance.net/gallery/255261283
     image: "../assets/works/google-pay-upi.png",
     embed: "https://www.behance.net/embed/project/255261283?ilo0=1",
     url: "https://www.behance.net/gallery/255261283",
     eyebrow: "UX Research | Google Pay | 4 Day Design Sprint",
     title: "Enabling Novice Users to make UPI Payments",
   },
-
-  // Still on their Behance embeds — send the covers and the two lines and
-  // they become tiles like the five above.
   {
-    // https://www.behance.net/gallery/247432273
+    // 274:5274 — the embed pairing here is a guess, see README
+    image: "../assets/works/unicorn-makers.png",
     embed: "https://www.behance.net/embed/project/247432273?ilo0=1",
+    url: "https://www.behance.net/gallery/247432273",
     eyebrow: "",
-    title: "",
+    title: "Unicorn Makers",
   },
   {
-    // https://www.behance.net/gallery/253628357
+    // 274:5280 — the embed pairing here is a guess, see README
+    image: "../assets/works/design-degree-show.png",
     embed: "https://www.behance.net/embed/project/253628357?ilo0=1",
+    url: "https://www.behance.net/gallery/253628357",
     eyebrow: "",
-    title: "",
+    title: "Design Degree Show \u201826 | Event Branding",
   },
 ];
