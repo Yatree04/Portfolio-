@@ -23,9 +23,11 @@
              -apple-system, Segoe UI, sans-serif;
   --title: "Darker Grotesque", var(--display);
 
-  /* 1249px content column === the 1920px frame minus its 336px side margins */
-  --content: 1249px;
-  --footer-content: 1280px;
+  /* The Figma frame is 1920 wide; these are its measurements brought down to
+     the widths people actually browse at. The hero type is the exception —
+     it stays at its designed size. */
+  --content: 1080px;
+  --footer-content: 1120px;
 }
 
 * { box-sizing: border-box; }
@@ -53,19 +55,77 @@ a { text-decoration: none; color: inherit; }
   padding: 0 20px;
 }
 
+/* The mailbox is not a nav destination — it is the envelope in the corner,
+   which opens when you reach for it. */
+.mailbox-link {
+  position: absolute;
+  right: clamp(16px, 3vw, 44px);
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  color: var(--plum-deep);
+}
+
+.envelope {
+  position: relative;
+  display: block;
+  width: 26px;
+  height: 26px;
+}
+
+.envelope svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  transition: opacity 0.22s ease, transform 0.22s ease;
+}
+
+.envelope .is-open {
+  opacity: 0;
+  transform: translateY(2px);
+}
+
+.mailbox-link:hover .envelope .is-open,
+.mailbox-link:focus-visible .envelope .is-open {
+  opacity: 1;
+  transform: translateY(-1px);
+}
+
+.mailbox-link:hover .envelope .is-shut,
+.mailbox-link:focus-visible .envelope .is-shut {
+  opacity: 0;
+  transform: translateY(-3px);
+}
+
+@media (max-width: 760px) {
+  .mailbox-link { width: 38px; height: 38px; right: 12px; }
+  .envelope { width: 22px; height: 22px; }
+}
+
 .nav-pill {
   display: flex;
   align-items: center;
-  gap: 54px;
-  height: 84px;
-  padding: 0 42.77px;              /* 18.33px list inset + 24.44px pill pad */
-  border: 1.527px solid rgba(91, 68, 91, 0.45);
-  border-radius: 50.4px;
+  gap: 30px;
+  height: 56px;
+  padding: 0 26px;
+  border: 1.2px solid rgba(91, 68, 91, 0.45);
+  border-radius: 32px;
   background: var(--paper);
   font-family: var(--mono-alt);
-  font-size: 21.382px;
-  letter-spacing: -0.8553px;
-  line-height: 32.073px;
+  font-size: 14.5px;
+  letter-spacing: -0.5px;
+  line-height: 22px;
   color: var(--muted);
   white-space: nowrap;
 }
@@ -76,10 +136,10 @@ a { text-decoration: none; color: inherit; }
 .nav-pill a.is-active {
   display: inline-flex;
   align-items: center;
-  height: 56.509px;
-  margin: 0 -24.44px;              /* pill bleeds into the 54px text gap    */
-  padding: 0 24.44px;
-  border-radius: 30.545px;
+  height: 38px;
+  margin: 0 -16px;                 /* pill bleeds into the text gap */
+  padding: 0 16px;
+  border-radius: 20px;
   background: var(--plum-deep);
   color: #fff;
   font-family: var(--mono);
@@ -94,9 +154,9 @@ a { text-decoration: none; color: inherit; }
   flex-direction: column;
   align-items: center;
   justify-content: flex-end;
-  min-height: 664px;
-  margin-top: -84px;               /* header is sticky and overlays the top */
-  padding: 84px 20px 98px;
+  min-height: 440px;
+  margin-top: -56px;               /* header is sticky and overlays the top */
+  padding: 56px 20px 64px;
   text-align: center;
 }
 
@@ -125,30 +185,30 @@ a { text-decoration: none; color: inherit; }
 .works {
   width: min(var(--content), 100% - 40px);
   margin: 0 auto;
-  padding-top: 128px;
+  padding-top: 88px;
 }
 
 .works h2 {
-  margin: 0 0 76px;
+  margin: 0 0 44px;
   font-family: var(--display);
   font-weight: 300;
-  font-size: 32px;
-  line-height: 40px;
-  letter-spacing: 0.9px;
+  font-size: 24px;
+  line-height: 30px;
+  letter-spacing: 0.7px;
   color: var(--plum);
 }
 
 .works-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  column-gap: 32.5px;
+  column-gap: 26px;
   align-items: start;
 }
 
 .works-col {
   display: flex;
   flex-direction: column;
-  gap: 32px;
+  gap: 26px;
   min-width: 0;
 }
 
@@ -157,7 +217,7 @@ a { text-decoration: none; color: inherit; }
 .card {
   display: block;
   padding: 3px;
-  border-radius: 19px;
+  border-radius: 17px;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
@@ -170,7 +230,7 @@ a { text-decoration: none; color: inherit; }
   position: relative;
   aspect-ratio: 602 / 399.2;       /* Figma cover block: 602 x 399.2 */
   overflow: hidden;
-  border-radius: 16px;
+  border-radius: 14px;
   background: var(--card-bg);
 }
 
@@ -202,8 +262,8 @@ a { text-decoration: none; color: inherit; }
   bottom: 0;
   display: flex;
   align-items: center;
-  height: 37px;
-  padding: 0 16px;
+  height: 31px;
+  padding: 0 13px;
   border-radius: 10px;
   background: rgba(0, 0, 0, 0.7);
   font-family: var(--mono-alt);
@@ -220,16 +280,16 @@ a { text-decoration: none; color: inherit; }
 .card-text {
   display: flex;
   flex-direction: column;
-  gap: 8px;
-  padding-top: 19px;               /* 421.2 - (3 + 399.2) */
+  gap: 5px;
+  padding-top: 14px;
 }
 
 .card-eyebrow {
   margin: 0;
   font-family: var(--mono);
-  font-size: 16px;
-  line-height: 28px;
-  letter-spacing: -0.8px;
+  font-size: 12.5px;
+  line-height: 20px;
+  letter-spacing: -0.4px;
   color: var(--muted);
 }
 
@@ -237,17 +297,17 @@ a { text-decoration: none; color: inherit; }
   margin: 0;
   font-family: var(--title);
   font-weight: 500;
-  font-size: 30px;
-  line-height: 36px;
+  font-size: 23px;
+  line-height: 28px;
   color: var(--plum);
 }
 
 .card-desc {
   margin: 0;
   font-family: var(--mono-alt);
-  font-size: 20px;
-  line-height: 28px;
-  letter-spacing: -0.8px;
+  font-size: 15px;
+  line-height: 22px;
+  letter-spacing: -0.5px;
   color: var(--muted);
   white-space: pre-line;           /* "\n" in the data makes a new line */
 }
@@ -255,7 +315,7 @@ a { text-decoration: none; color: inherit; }
 /* --------------------------------------------------------------- footer */
 
 .site-footer {
-  margin-top: 244px;
+  margin-top: 170px;
   border-top: 1px solid var(--footer-line);
   background: var(--footer-bg);
 }
@@ -267,31 +327,31 @@ a { text-decoration: none; color: inherit; }
   justify-content: space-between;
   gap: 40px;
   width: min(var(--footer-content), 100% - 40px);
-  min-height: 316px;
+  min-height: 230px;
   margin: 0 auto;
-  padding-top: 42px;
+  padding-top: 34px;
 }
 
 .footer-copy {
-  width: 392px;
+  width: 310px;
   max-width: 100%;
   margin: 0;
   font-family: var(--mono);
-  font-size: 20px;
-  line-height: 42px;
+  font-size: 14.5px;
+  line-height: 30px;
   color: #fff;
 }
 
 .footer-nav {
   position: absolute;
   left: 50%;
-  top: 64px;
+  top: 50px;
   transform: translateX(-50%);
   display: flex;
-  gap: 23.7px;
+  gap: 18px;
   font-family: var(--mono-alt);
-  font-size: 14px;
-  line-height: 21px;
+  font-size: 11.5px;
+  line-height: 18px;
   color: var(--muted);
   white-space: nowrap;
 }
@@ -301,17 +361,17 @@ a { text-decoration: none; color: inherit; }
 
 .footer-social {
   display: flex;
-  gap: 8px;
-  margin-top: 22px;                /* aligns the 36px chips to y = 64 */
+  gap: 7px;
+  margin-top: 15px;
 }
 
 .footer-social a {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 36px;
-  height: 36px;
-  border-radius: 10px;
+  width: 30px;
+  height: 30px;
+  border-radius: 9px;
   background: var(--footer-chip);
   color: #fff;
   transition: background 0.2s ease;
@@ -320,17 +380,12 @@ a { text-decoration: none; color: inherit; }
 .footer-social a:hover { background: #3a3743; }
 
 .footer-social svg {
-  width: 16px;
-  height: 16px;
+  width: 13px;
+  height: 13px;
   fill: currentColor;
 }
 
 /* ----------------------------------------------------------- responsive */
-
-@media (max-width: 1280px) {
-  .nav-pill { gap: 34px; font-size: 18px; padding: 0 32px; }
-  .nav-pill a.is-active { margin: 0 -18px; padding: 0 18px; }
-}
 
 @media (max-width: 1100px) {
   /* one column: the two column wrappers dissolve so cards keep source order */
@@ -388,38 +443,38 @@ a { text-decoration: none; color: inherit; }
 .page {
   width: min(var(--content), 100% - 40px);
   margin: 0 auto;
-  padding-top: 128px;
+  padding-top: 88px;
   min-height: 46vh;
 }
 
 .page-title {
-  margin: 0 0 24px;
+  margin: 0 0 20px;
   font-family: var(--display);
   font-weight: 300;
-  font-size: 32px;
-  line-height: 40px;
-  letter-spacing: 0.9px;
+  font-size: 24px;
+  line-height: 30px;
+  letter-spacing: 0.7px;
   color: var(--plum);
 }
 
 .page-lede {
   margin: 0;
-  max-width: 646px;
+  max-width: 620px;
   font-family: var(--mono-alt);
-  font-size: 20px;
-  line-height: 28px;
-  letter-spacing: -0.8px;
+  font-size: 15px;
+  line-height: 23px;
+  letter-spacing: -0.5px;
   color: var(--muted);
 }
 
-.page-lede + .page-lede { margin-top: 20px; }
+.page-lede + .page-lede { margin-top: 16px; }
 
 .page-note {
-  margin-top: 40px;
+  margin-top: 32px;
   font-family: var(--mono);
-  font-size: 16px;
-  line-height: 28px;
-  letter-spacing: -0.8px;
+  font-size: 13px;
+  line-height: 24px;
+  letter-spacing: -0.4px;
   color: var(--muted);
 }
 
@@ -462,3 +517,4 @@ a { text-decoration: none; color: inherit; }
   .page-title { font-size: 26px; }
   .page-lede { font-size: 17px; line-height: 25px; }
 }
+

@@ -12,7 +12,12 @@ architecture; this file is the set of conventions to hold to.
 - **One nav, one list.** The static pages (works, playground, about, resume)
   get their header pill and footer from `public/assets/site.js`; a new
   destination is one entry in its `NAV` array, never hand-written markup in a
-  page. The React routes carry `BackButton` instead.
+  page. The React routes carry `BackButton` instead. The mailbox is not in
+  that list — it is the envelope in the top-right corner, which opens on hover.
+- **The Figma frame is 1920 wide; the site is not.** Measurements taken from it
+  get scaled down to the widths people actually browse at, in the tokens at the
+  top of `site.css`. The hero on works is the one exception, at its designed
+  size.
 - **Sections are self-contained.** A section lives under `src/sections/<name>/`,
   owns its own state, and fills whatever wraps it. Register it in
   `src/sections/registry.ts`; the shell hands it `onAdvance` to move on to the

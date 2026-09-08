@@ -19,8 +19,10 @@
     return (self && self.src ? self.src : "").replace(/assets\/site\.js.*$/, "");
   })();
 
+  /** The mailbox sits in the corner as an envelope, not in the nav. */
+  var MAILBOX = { id: "mailbox", label: "MAILBOX", href: SITE + "mailbox/" };
+
   var NAV = [
-    { id: "mailbox", label: "MAILBOX", href: SITE + "mailbox/" },
     { id: "works", label: "WORKS", href: SITE + "works/" },
     { id: "playground", label: "PLAYGROUND", href: SITE + "playground/" },
     { id: "about", label: "ABOUT", href: SITE + "about/" },
@@ -59,10 +61,28 @@
     );
   }
 
+  /* Two states of one envelope: shut, and opened by the flap lifting. The
+     second fades in over the first on hover. */
+  var ENVELOPE =
+    '<span class="envelope" aria-hidden="true">' +
+      '<svg class="is-shut" viewBox="0 0 24 24">' +
+        '<rect x="2.5" y="5.6" width="19" height="12.8" rx="1.8"/>' +
+        '<path d="m2.9 6.6 9.1 6.5 9.1-6.5"/>' +
+      "</svg>" +
+      '<svg class="is-open" viewBox="0 0 24 24">' +
+        '<path d="M2.5 10.4 12 3.5l9.5 6.9v7.9a1.7 1.7 0 0 1-1.7 1.7H4.2a1.7 1.7 0 0 1-1.7-1.7z"/>' +
+        '<path d="m2.7 10.6 7.2 5.2M14.1 15.8l7.2-5.2"/>' +
+      "</svg>" +
+    "</span>";
+
   var header = document.createElement("header");
   header.className = "site-header";
   header.innerHTML =
-    '<nav class="nav-pill" aria-label="Primary">' + NAV.map(link).join("") + "</nav>";
+    '<nav class="nav-pill" aria-label="Primary">' + NAV.map(link).join("") + "</nav>" +
+    '<a class="mailbox-link" href="' + MAILBOX.href + '"' +
+    ' aria-label="The mailbox — notes people have left"' +
+    (current === "mailbox" ? ' aria-current="page"' : "") +
+    ">" + ENVELOPE + "</a>";
 
   var footer = document.createElement("footer");
   footer.className = "site-footer";
@@ -71,7 +91,7 @@
       '<p class="footer-copy">© 2026, Vibe coded in Antigravity and Claude Code by me :)</p>' +
       '<nav class="footer-nav" aria-label="Footer">' +
         '<a href="' + SITE + '">HOME</a>' +
-        NAV.map(function (item) {
+        NAV.concat([MAILBOX]).map(function (item) {
           return '<a href="' + item.href + '">' + item.label + "</a>";
         }).join("") +
       "</nav>" +
@@ -88,4 +108,10 @@
 
   document.body.insertBefore(header, document.body.firstChild);
   document.body.appendChild(footer);
+
+  /* The same cursor the React routes load. */
+  var cursor = document.createElement("script");
+  cursor.src = SITE + "assets/cursor.js";
+  cursor.defer = true;
+  document.body.appendChild(cursor);
 })();
