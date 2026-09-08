@@ -17,4 +17,7 @@ architecture; this file is the set of conventions to hold to.
   `232:5274` at its authored 497x304 with every child at its designed offset,
   and scales as a unit. Change the geometry there, not per-caller.
 - **Copy is lowercase and plain.** The site talks the way the notes do.
+- **Buttons that matter are brown.** `--color-brown` filled with `--color-cream`
+  text for the primary, outlined for its equal. They have to hold contrast over
+  the pale pile showing through behind them.
 - **Respect `prefers-reduced-motion`** in anything that moves.

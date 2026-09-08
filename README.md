@@ -27,7 +27,7 @@ Pushing to `main` builds and deploys to GitHub Pages
 | `shuffling` | The deck riffles on the way into the composer, gating on the handwriting font. |
 | `compose`   | The Figma card, live: name, handwriting textarea, pen and eraser.         |
 | `dropping`  | The finished card lifts, arcs and tumbles into the slot the pile reserved. |
-| `gallery`   | The whole pile, scattered. Hover tilts a card, clicking one opens it.     |
+| `gallery`   | The whole pile, loose. Drag notes aside, click one to read it.            |
 
 Enter submits from anywhere on the composer; Shift+Enter is a newline. Every
 screen past the door carries a back button — see `CLAUDE.md`.
@@ -76,6 +76,17 @@ npm run build:preview   # -> dist/preview.html
 CSS, the JS and the handwriting font inlined, for hosts that serve a single page
 and no `/assets`. Note that sandboxed viewers block page-initiated downloads, so
 "save as png" only works from a real deployment or `npm run dev`.
+
+### The pile is loose
+
+Notes in the gallery can be dragged. A press that travels more than a few
+pixels is a drag, anything less is a click that opens the note. Dragging pulls
+a note to the front of the stack and leaves it there, so pushing one aside
+reveals what it was lying on. Two details make it behave: pointer travel is
+divided by the stage's scale before it becomes a displacement, or the note
+would slide faster than the cursor; and the displacement is clamped against
+the viewport, because the pile has no scrollbars and no tidy-up button, so a
+note flung into the void would simply be gone. Arrangements last the session.
 
 ### The pile never reshuffles
 

@@ -14,6 +14,10 @@
   --color-paper-edge: #e8dea0;
   --color-ink: #080808;
   --color-field: #d9d9d9;
+  /* Reads against both the white ground and the paper yellow. */
+  --color-brown: #3a2a1b;
+  --color-brown-deep: #241a10;
+  --color-cream: #fdfaf0;
 
   --font-mono: "Fragment Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
   --font-hand: "Handwriting", "Segoe Script", cursive;
@@ -70,16 +74,6 @@ body {
   line-height: 26px;
   height: 156px;
   overflow: hidden;
-}
-
-/* Lifts centred text off the pile behind it without hiding the pile. */
-.scrim {
-  background: radial-gradient(
-    ellipse 46rem 28rem at center,
-    rgb(255 255 255 / 0.92) 0%,
-    rgb(255 255 255 / 0.75) 42%,
-    rgb(255 255 255 / 0) 72%
-  );
 }
 
 /* Keycap. Spelling the key out beats a ↵ glyph that many monospace faces

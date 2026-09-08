@@ -39,17 +39,24 @@ export function GalleryChrome({
     >
       <BackButton onClick={onBack} label="back" />
 
-      <p className="absolute inset-x-0 top-8 text-center text-[12px] tracking-[0.14em] text-black/55 uppercase">
-        the pile · {count} {count === 1 ? "note" : "notes"}
-      </p>
+      <div className="absolute inset-x-0 top-8 flex flex-col items-center gap-2">
+        <p className="text-[12px] tracking-[0.14em] text-black/55 uppercase">
+          the pile · {count} {count === 1 ? "note" : "notes"}
+        </p>
+        {count > 1 && (
+          <p className="text-[12px] text-black/50">
+            drag a note aside to read what is under it
+          </p>
+        )}
+      </div>
 
       <div className="absolute inset-x-0 bottom-8 flex justify-center">
         <button
           type="button"
           onClick={onCompose}
-          className="pointer-events-auto cursor-pointer rounded-full border border-black/30 bg-white/85 px-6 py-2.5 text-[14px] text-ink backdrop-blur-sm transition-colors hover:border-black hover:bg-white"
+          className="pointer-events-auto cursor-pointer rounded-full bg-brown px-7 py-3 text-[15px] text-cream transition-colors hover:bg-brown-deep"
         >
-          leave one too <kbd className="key hidden sm:inline">enter</kbd>
+          leave one too
         </button>
       </div>
     </motion.div>

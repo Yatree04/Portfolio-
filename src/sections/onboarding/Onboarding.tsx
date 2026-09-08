@@ -148,7 +148,7 @@ export function Onboarding({ onAdvance, onNoteDropped }: OnboardingProps) {
         parallax={parallax}
         // The welcome screen is mostly words, so the pile drops right back
         // behind them; the composer has an opaque card holding the middle.
-        backdropOpacity={phase === "welcome" ? 0.07 : 0.12}
+        backdropOpacity={phase === "welcome" ? 0.11 : 0.12}
         onOpen={setOpenNote}
       />
 
@@ -156,17 +156,12 @@ export function Onboarding({ onAdvance, onNoteDropped }: OnboardingProps) {
         {phase === "welcome" && (
           <Welcome
             key="welcome"
-            noteCount={notes.length}
             instant={greeted}
             onBegin={() => {
               setGreeted(true);
               setPhase("shuffling");
             }}
             onViewWork={onAdvance}
-            onViewPile={() => {
-              setGreeted(true);
-              setPhase("gallery");
-            }}
           />
         )}
 
