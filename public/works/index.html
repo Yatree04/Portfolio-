@@ -50,18 +50,23 @@
           return m ? m[1] : value;
         }
 
+        function iframeFor(project) {
+          return (
+            '<iframe src="' + esc(embedSrc(project.embed)) + '" loading="lazy" ' +
+            'allowfullscreen allow="clipboard-write" ' +
+            'referrerpolicy="strict-origin-when-cross-origin" ' +
+            'title="' + esc(project.title || 'Project') + ' on Behance"></iframe>'
+          );
+        }
+
+        /* Cover art first — that is the tile in the design. A project whose
+           cover is not in the repo yet falls back to its Behance embed, so
+           adding the file is all it takes to switch a tile over. */
         function media(project) {
-          if (project.embed) {
-            return (
-              '<iframe src="' + esc(embedSrc(project.embed)) + '" loading="lazy" ' +
-              'allowfullscreen allow="clipboard-write" ' +
-              'referrerpolicy="strict-origin-when-cross-origin" ' +
-              'title="' + esc(project.title || 'Project') + ' on Behance"></iframe>'
-            );
-          }
           if (project.image) {
             return '<img src="' + esc(project.image) + '" alt="' + esc(project.title) + '" loading="lazy" />';
           }
+          if (project.embed) return iframeFor(project);
           return '<div class="placeholder"></div>';
         }
 
@@ -104,6 +109,17 @@
           set('.card-eyebrow', project.eyebrow);
           set('.card-title', project.title);
           set('.card-desc', project.description);
+
+          /* If the cover file is not there yet, show what we do have. */
+          var cover = card.querySelector('.card-media img');
+          if (cover) {
+            cover.addEventListener('error', function () {
+              var box = card.querySelector('.card-media');
+              box.innerHTML = project.embed
+                ? iframeFor(project)
+                : '<div class="placeholder"></div>';
+            });
+          }
 
           cols[i % cols.length].appendChild(card);
         });
