@@ -2,14 +2,14 @@
 /*
  * Fills works/projects.js from a Behance profile.
  *
- *   node works/import-behance.mjs yatripatel
- *   node works/import-behance.mjs yatripatel --download   (also saves covers
- *                                                          into assets/works/)
+ *   node scripts/import-behance.mjs yatripatel
+ *   node scripts/import-behance.mjs yatripatel --download   (also saves covers
+ *                                                            into public/assets/works/)
  *
  * Behance retired its public API, so this reads the JSON that the profile and
  * project pages embed in their own HTML. Run it from a machine that can reach
- * behance.net; it rewrites works/projects.js in place, keeping the file's
- * header comment.
+ * behance.net; it rewrites public/works/projects.js in place, keeping the
+ * file's header comment.
  */
 import { writeFile, mkdir } from 'node:fs/promises';
 import { readFileSync } from 'node:fs';
@@ -17,7 +17,8 @@ import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const HERE = dirname(fileURLToPath(import.meta.url));
-const ROOT = join(HERE, '..');
+const PUBLIC = join(HERE, '..', 'public');
+const WORKS = join(PUBLIC, 'works');
 const UA =
   'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 ' +
   '(KHTML, like Gecko) Chrome/124.0 Safari/537.36';
@@ -25,7 +26,7 @@ const UA =
 const user = process.argv[2];
 const download = process.argv.includes('--download');
 if (!user) {
-  console.error('usage: node works/import-behance.mjs <behance-username> [--download]');
+  console.error('usage: node scripts/import-behance.mjs <behance-username> [--download]');
   process.exit(1);
 }
 
@@ -117,8 +118,8 @@ async function saveCover(url, slug) {
   if (!res.ok) throw new Error(`${res.status} for ${url}`);
   const ext = (/\.(jpe?g|png|webp|gif)/i.exec(url) || [, 'jpg'])[1];
   const rel = `/assets/works/${slug}.${ext}`;
-  await mkdir(join(ROOT, 'assets/works'), { recursive: true });
-  await writeFile(join(ROOT, 'assets/works', `${slug}.${ext}`),
+  await mkdir(join(PUBLIC, 'assets/works'), { recursive: true });
+  await writeFile(join(PUBLIC, 'assets/works', `${slug}.${ext}`),
                   Buffer.from(await res.arrayBuffer()));
   return rel;
 }
@@ -136,7 +137,7 @@ const unique = [...new Map(projects.map((p) => [p.url, p])).values()];
 if (!unique.length) {
   console.error(
     'No projects found. Behance likely changed its page shape, or the profile ' +
-    'is private. Fill in works/projects.js by hand instead.');
+    'is private. Fill in public/works/projects.js by hand instead.');
   process.exit(2);
 }
 console.log(`found ${unique.length} project(s)`);
@@ -160,9 +161,9 @@ for (const p of unique) {
   });
 }
 
-const header = readFileSync(join(HERE, 'projects.js'), 'utf8').split('window.WORKS_PROJECTS')[0];
+const header = readFileSync(join(WORKS, 'projects.js'), 'utf8').split('window.WORKS_PROJECTS')[0];
 const body = entries
   .map((e) => '  ' + JSON.stringify(e, null, 2).split('\n').join('\n  '))
   .join(',\n');
-await writeFile(join(HERE, 'projects.js'), `${header}window.WORKS_PROJECTS = [\n${body},\n];\n`);
-console.log(`wrote ${entries.length} project(s) to works/projects.js`);
+await writeFile(join(WORKS, 'projects.js'), `${header}window.WORKS_PROJECTS = [\n${body},\n];\n`);
+console.log(`wrote ${entries.length} project(s) to public/works/projects.js`);

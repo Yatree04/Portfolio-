@@ -1,0 +1,48 @@
+import { useCallback } from "react";
+import { SECTIONS } from "./sections/registry";
+
+/**
+ * The works page is its own document under `public/works/`, not a section, so
+ * moving on from the last section is a navigation rather than a scroll.
+ */
+const WORKS_URL = "/works/";
+
+/**
+ * The site shell. Sections are full-viewport panels stacked in a scroll-snap
+ * column; today there is exactly one — onboarding — and everything else the
+ * portfolio grows gets appended to the registry.
+ */
+export default function App() {
+  const scrollToSection = useCallback((id: string) => {
+    document.getElementById(id)?.scrollIntoView({
+      behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches
+        ? "auto"
+        : "smooth",
+    });
+  }, []);
+
+  return (
+    <main className="h-full w-full snap-y snap-mandatory overflow-y-auto overflow-x-hidden">
+      {SECTIONS.map(({ id, Component }, index) => {
+        const next = SECTIONS[index + 1];
+        return (
+          <section
+            key={id}
+            id={id}
+            className="relative h-full w-full snap-start overflow-hidden"
+          >
+            <Component
+              onAdvance={
+                next
+                  ? () => scrollToSection(next.id)
+                  : () => {
+                      window.location.href = WORKS_URL;
+                    }
+              }
+            />
+          </section>
+        );
+      })}
+    </main>
+  );
+}

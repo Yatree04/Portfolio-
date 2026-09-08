@@ -28,7 +28,7 @@
  * Or run the importer to fill this file in automatically, titles, blurbs,
  * fields and covers included:
  *
- *     node works/import-behance.mjs yatripatel --download
+ *     node scripts/import-behance.mjs yatripatel --download
  */
 window.WORKS_PROJECTS = [
   {
