@@ -3,11 +3,19 @@
  * ---------------------------------------------------------------------------
  * Each entry renders one card in the "Featured Works" grid.
  *
- *   title        Card heading                       (e.g. "Google Stitch")
- *   eyebrow      Small uppercase line above title   (e.g. "PRODUCT MANAGEMENT | UX STRATEGY")
- *   description  One or more lines under the title  (string, "\n" makes a new line)
- *   url          Where the card links to            (Behance project URL, case study, etc.)
- *   image        Cover image URL or local path      (omit for the grey placeholder block)
+ *   image        Cover art — the tile is built around it (Figma 89:6276).
+ *                A local path such as "/assets/works/pacific-cascade.jpg", or
+ *                a URL. It is cropped to fill the 602 x 399.2 cover box.
+ *   eyebrow      The line above the title, e.g.
+ *                "Data Visualization | Pacific DataViz Challenge"
+ *   title        The project name, e.g. "The Pacific Cascade"
+ *   url          Where the tile links to (Behance project, case study, ...)
+ *   description  Optional. The design's tile is eyebrow + title only, so
+ *                leaving this out is the norm; set it and a line appears.
+ *   embed        Fallback for a project with no cover art yet: a Behance
+ *                Share -> Embed iframe, or its URL. Renders in place of the
+ *                image, and the tile drops the text block if the copy is
+ *                empty too.
  *   status       "under-construction" shows the hover badge from the design
  *
  * Adding the rest of the Behance projects

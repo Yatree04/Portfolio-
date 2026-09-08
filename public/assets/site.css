@@ -7,7 +7,9 @@
 :root {
   --paper: #fcfcfc;
   --ink: #352b38;          /* hero heading            */
-  --plum: #705b77;         /* section + card headings */
+  --plum: #705b77;         /* section headings            */
+  --card-title: #482552;   /* card headings   (89:6280)   */
+  --card-eyebrow: #636363; /* card eyebrows   (89:6279)   */
   --plum-deep: #5b445b;    /* active nav pill         */
   --muted: #8c8a98;        /* eyebrows, body copy     */
   --body: #646464;         /* hero subtitle           */
@@ -234,12 +236,8 @@ a { text-decoration: none; color: inherit; }
   background: var(--card-bg);
 }
 
-/* The Behance embed is 404 x 316 natively while the design's cover box is
-   602 x 399.2. If the embeds letterboxes inside it, uncomment this to switch
-   the cover box to their proportion:
-
-.card-media:has(iframe) { aspect-ratio: 404 / 316; }
-*/
+/* A Behance embed brings its own 404 x 316 proportion; it is the fallback
+   for a project with no cover art, so it keeps the box rather than the crop. */
 
 .card-media img,
 .card-media iframe {
@@ -280,7 +278,7 @@ a { text-decoration: none; color: inherit; }
 .card-text {
   display: flex;
   flex-direction: column;
-  gap: 5px;
+  gap: 1px;                        /* Figma: gap-px */
   padding-top: 14px;
 }
 
@@ -288,18 +286,18 @@ a { text-decoration: none; color: inherit; }
   margin: 0;
   font-family: var(--mono);
   font-size: 12.5px;
-  line-height: 20px;
+  line-height: 22px;
   letter-spacing: -0.4px;
-  color: var(--muted);
+  color: var(--card-eyebrow);
 }
 
 .card-title {
   margin: 0;
   font-family: var(--title);
-  font-weight: 500;
+  font-weight: 600;                /* Darker Grotesque SemiBold */
   font-size: 23px;
   line-height: 28px;
-  color: var(--plum);
+  color: var(--card-title);
 }
 
 .card-desc {
