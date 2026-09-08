@@ -1,15 +1,22 @@
 import { motion } from "framer-motion";
 import { useEffect } from "react";
+import { BackButton } from "../../../components/BackButton";
 
 export interface GalleryChromeProps {
   count: number;
   onCompose: () => void;
+  onBack: () => void;
   /** Suppressed while a note is being read. */
   muted: boolean;
 }
 
 /** The thin layer of words over the pile. */
-export function GalleryChrome({ count, onCompose, muted }: GalleryChromeProps) {
+export function GalleryChrome({
+  count,
+  onCompose,
+  onBack,
+  muted,
+}: GalleryChromeProps) {
   useEffect(() => {
     if (muted) return;
     const onKey = (event: KeyboardEvent) => {
@@ -30,7 +37,9 @@ export function GalleryChrome({ count, onCompose, muted }: GalleryChromeProps) {
       exit={{ opacity: 0 }}
       transition={{ duration: 0.5, delay: muted ? 0 : 0.2 }}
     >
-      <p className="absolute left-8 top-7 text-[11px] tracking-[0.14em] text-black/40 uppercase">
+      <BackButton onClick={onBack} label="back" />
+
+      <p className="absolute inset-x-0 top-8 text-center text-[12px] tracking-[0.14em] text-black/55 uppercase">
         the pile · {count} {count === 1 ? "note" : "notes"}
       </p>
 
@@ -38,9 +47,9 @@ export function GalleryChrome({ count, onCompose, muted }: GalleryChromeProps) {
         <button
           type="button"
           onClick={onCompose}
-          className="pointer-events-auto cursor-pointer rounded-full border border-black/15 bg-white/80 px-5 py-2 text-[12px] text-black/70 backdrop-blur-sm transition-colors hover:border-black/40 hover:text-black"
+          className="pointer-events-auto cursor-pointer rounded-full border border-black/30 bg-white/85 px-6 py-2.5 text-[14px] text-ink backdrop-blur-sm transition-colors hover:border-black hover:bg-white"
         >
-          leave one too <kbd className="key">enter</kbd>
+          leave one too <kbd className="key hidden sm:inline">enter</kbd>
         </button>
       </div>
     </motion.div>

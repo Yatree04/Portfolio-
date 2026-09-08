@@ -15,6 +15,8 @@ export interface PileProps {
   hiddenId?: string | null;
   /** Pointer parallax, in [-1, 1]. Backdrop mode only. */
   parallax?: { x: number; y: number };
+  /** Backdrop mode only. Lower where the foreground is mostly text. */
+  backdropOpacity?: number;
   onOpen?: (note: Note) => void;
 }
 
@@ -29,6 +31,7 @@ export function Pile({
   viewport,
   hiddenId,
   parallax = { x: 0, y: 0 },
+  backdropOpacity = 0.12,
   onOpen,
 }: PileProps) {
   const [hoveredId, setHoveredId] = useState<string | null>(null);
@@ -61,7 +64,7 @@ export function Pile({
             parallax.y * -18
           }px) scale(${scale})`,
           transformOrigin: "center",
-          opacity: isGallery ? 1 : 0.12,
+          opacity: isGallery ? 1 : backdropOpacity,
           filter: isGallery ? "none" : "saturate(0.6)",
           transitionProperty: "opacity, filter, transform",
           transitionDuration: "900ms",

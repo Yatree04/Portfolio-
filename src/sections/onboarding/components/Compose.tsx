@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { useCallback, useEffect, useRef, useState } from "react";
 import Tilt from "react-parallax-tilt";
+import { BackButton } from "../../../components/BackButton";
 import { CARD_H, CARD_W } from "../lib/layout";
 import { NAME_MAX_LENGTH, generateName } from "../lib/names";
 import { formatCardDate } from "../lib/store";
@@ -33,9 +34,10 @@ export interface ComposeProps {
   onSubmit: (submission: ComposeSubmission) => void;
   /** True once the card has been handed off to the drop animation. */
   handedOff: boolean;
+  onBack: () => void;
 }
 
-export function Compose({ scale, onSubmit, handedOff }: ComposeProps) {
+export function Compose({ scale, onSubmit, handedOff, onBack }: ComposeProps) {
   const [name, setName] = useState(generateName);
   const [body, setBody] = useState("");
   const [tool, setTool] = useState<DrawTool | null>(null);
@@ -92,10 +94,12 @@ export function Compose({ scale, onSubmit, handedOff }: ComposeProps) {
       exit={{ opacity: 0 }}
       transition={{ duration: 0.55, ease: [0.2, 0.9, 0.25, 1] }}
     >
+      {!handedOff && <BackButton onClick={onBack} label="back" />}
+
       <motion.p
         animate={{ opacity: handedOff ? 0 : 1 }}
         transition={{ duration: 0.28 }}
-        className="text-center text-[12px] text-black"
+        className="text-center text-[16px] text-ink sm:text-[18px]"
       >
         Leave me Something to ponder about....
       </motion.p>
@@ -105,7 +109,7 @@ export function Compose({ scale, onSubmit, handedOff }: ComposeProps) {
         transition={{ duration: 0.28 }}
         className="flex items-center gap-[7px]"
       >
-        <label htmlFor="visitor-name" className="text-[12px] text-black">
+        <label htmlFor="visitor-name" className="text-[13px] text-ink">
           Name:
         </label>
         <div className="relative">
@@ -120,7 +124,7 @@ export function Compose({ scale, onSubmit, handedOff }: ComposeProps) {
                 bodyRef.current?.focus();
               }
             }}
-            className="h-[31px] w-[min(306px,70vw)] rounded-[8px] bg-[#d9d9d9]/60 px-[13px] text-[12px] text-ink outline-none transition-colors focus:bg-[#d9d9d9]/85"
+            className="h-[31px] w-[min(306px,70vw)] rounded-[8px] bg-[#d9d9d9]/60 px-[13px] text-[13px] text-ink outline-none transition-colors focus:bg-[#d9d9d9]/85"
           />
           <button
             type="button"
@@ -214,7 +218,7 @@ export function Compose({ scale, onSubmit, handedOff }: ComposeProps) {
           type="button"
           onClick={submit}
           disabled={!canSubmit}
-          className="cursor-pointer text-[11px] text-black/45 transition-opacity hover:text-black disabled:cursor-default disabled:opacity-35"
+          className="cursor-pointer text-[13px] text-black/60 transition-opacity hover:text-black disabled:cursor-default disabled:opacity-35"
         >
           press <kbd className="key">enter</kbd> to drop it in the pile
         </button>

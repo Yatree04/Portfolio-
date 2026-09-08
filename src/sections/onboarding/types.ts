@@ -17,5 +17,13 @@ export interface Note {
   snapshot: string | null;
 }
 
-/** What the app is currently showing. */
-export type Phase = "loading" | "welcome" | "compose" | "dropping" | "gallery";
+/**
+ * What the section is currently showing. The visitor lands on `welcome`; the
+ * deck only shuffles once they have asked to write something.
+ */
+export type Phase =
+  | "welcome"
+  | "shuffling"
+  | "compose"
+  | "dropping"
+  | "gallery";

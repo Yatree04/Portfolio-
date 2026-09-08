@@ -72,6 +72,16 @@ body {
   overflow: hidden;
 }
 
+/* Lifts centred text off the pile behind it without hiding the pile. */
+.scrim {
+  background: radial-gradient(
+    ellipse 46rem 28rem at center,
+    rgb(255 255 255 / 0.92) 0%,
+    rgb(255 255 255 / 0.75) 42%,
+    rgb(255 255 255 / 0) 72%
+  );
+}
+
 /* Keycap. Spelling the key out beats a ↵ glyph that many monospace faces
    simply do not carry. */
 kbd.key {

@@ -21,15 +21,16 @@ Pushing to `main` builds and deploys to GitHub Pages
 
 ## The flow
 
-| Phase      | What happens                                                                  |
-| ---------- | ----------------------------------------------------------------------------- |
-| `loading`  | A blank deck riffles itself while `document.fonts.ready` settles.              |
-| `welcome`  | Two lines type themselves over the faint pile. Enter moves on.                 |
-| `compose`  | The Figma card, live: name, handwriting textarea, pen and eraser.              |
-| `dropping` | The finished card lifts, arcs and tumbles into the slot the pile reserved.     |
-| `gallery`  | The whole pile, scattered. Hover tilts a card, clicking one opens it.          |
+| Phase       | What happens                                                              |
+| ----------- | ------------------------------------------------------------------------- |
+| `welcome`   | The front door, straight away. The greeting types itself over the faint pile. |
+| `shuffling` | The deck riffles on the way into the composer, gating on the handwriting font. |
+| `compose`   | The Figma card, live: name, handwriting textarea, pen and eraser.         |
+| `dropping`  | The finished card lifts, arcs and tumbles into the slot the pile reserved. |
+| `gallery`   | The whole pile, scattered. Hover tilts a card, clicking one opens it.     |
 
-Enter submits from anywhere on the composer; Shift+Enter is a newline.
+Enter submits from anywhere on the composer; Shift+Enter is a newline. Every
+screen past the door carries a back button — see `CLAUDE.md`.
 
 ## Sections
 

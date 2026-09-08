@@ -47,10 +47,12 @@ export interface OnboardingProps extends SectionProps {
 export function Onboarding({ onAdvance, onNoteDropped }: OnboardingProps) {
   const viewport = useViewport();
   const [notes, setNotes] = useState<Note[]>([]);
-  const [phase, setPhase] = useState<Phase>("loading");
+  const [phase, setPhase] = useState<Phase>("welcome");
   const [flyingNote, setFlyingNote] = useState<Note | null>(null);
   const [flight, setFlight] = useState<Flight | null>(null);
   const [openNote, setOpenNote] = useState<Note | null>(null);
+  /** The greeting types itself once; coming back to the door is instant. */
+  const [greeted, setGreeted] = useState(false);
   const [exportTarget, setExportTarget] = useState<Note | null>(null);
 
   useEffect(() => setNotes(loadNotes()), []);
@@ -60,7 +62,7 @@ export function Onboarding({ onAdvance, onNoteDropped }: OnboardingProps) {
 
   const isComposing = phase === "compose" || phase === "dropping";
   const pileMode =
-    phase === "welcome" || phase === "compose" ? "backdrop" : "gallery";
+    phase === "dropping" || phase === "gallery" ? "gallery" : "backdrop";
   const parallax = usePointerParallax(pileMode === "backdrop");
 
   /** The composer shows the card as close to 1:1 as the viewport allows. */
@@ -121,16 +123,6 @@ export function Onboarding({ onAdvance, onNoteDropped }: OnboardingProps) {
     [notes, onNoteDropped, viewport],
   );
 
-  /**
-   * Not everyone arrives wanting to be greeted. Skipping settles the section
-   * on the pile — so scrolling back later shows the notes, not the intro —
-   * and then moves on to the next section if the site has one yet.
-   */
-  const handleSkip = useCallback(() => {
-    setPhase("gallery");
-    onAdvance?.();
-  }, [onAdvance]);
-
   const handleArrived = useCallback(() => {
     setFlyingNote(null);
     setFlight(null);
@@ -148,30 +140,38 @@ export function Onboarding({ onAdvance, onNoteDropped }: OnboardingProps) {
 
   return (
     <div className="relative h-full w-full overflow-hidden bg-white">
-      {phase !== "loading" && (
-        <Pile
-          notes={notes}
-          mode={pileMode}
-          viewport={viewport}
-          hiddenId={flyingNote?.id ?? null}
-          parallax={parallax}
-          onOpen={setOpenNote}
-        />
-      )}
+      <Pile
+        notes={notes}
+        mode={pileMode}
+        viewport={viewport}
+        hiddenId={flyingNote?.id ?? null}
+        parallax={parallax}
+        // The welcome screen is mostly words, so the pile drops right back
+        // behind them; the composer has an opaque card holding the middle.
+        backdropOpacity={phase === "welcome" ? 0.07 : 0.12}
+        onOpen={setOpenNote}
+      />
 
       <AnimatePresence mode="wait">
-        {phase === "loading" && (
-          <Loader key="loader" onDone={() => setPhase("welcome")} />
-        )}
-
         {phase === "welcome" && (
           <Welcome
             key="welcome"
             noteCount={notes.length}
-            onBegin={() => setPhase("compose")}
-            onSkip={handleSkip}
-            skipLabel={onAdvance ? "skip to the rest" : "skip straight to the notes"}
+            instant={greeted}
+            onBegin={() => {
+              setGreeted(true);
+              setPhase("shuffling");
+            }}
+            onViewWork={onAdvance}
+            onViewPile={() => {
+              setGreeted(true);
+              setPhase("gallery");
+            }}
           />
+        )}
+
+        {phase === "shuffling" && (
+          <Loader key="shuffling" onDone={() => setPhase("compose")} />
         )}
 
         {isComposing && (
@@ -180,6 +180,7 @@ export function Onboarding({ onAdvance, onNoteDropped }: OnboardingProps) {
             scale={composeScale}
             handedOff={phase === "dropping"}
             onSubmit={handleSubmit}
+            onBack={() => setPhase("welcome")}
           />
         )}
       </AnimatePresence>
@@ -188,7 +189,8 @@ export function Onboarding({ onAdvance, onNoteDropped }: OnboardingProps) {
         <GalleryChrome
           count={notes.length}
           muted={openNote !== null}
-          onCompose={() => setPhase("compose")}
+          onCompose={() => setPhase("shuffling")}
+          onBack={() => setPhase("welcome")}
         />
       )}
 

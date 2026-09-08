@@ -6,14 +6,14 @@ export interface LoaderProps {
   onDone: () => void;
 }
 
-/** Minimum time the loader is shown, so it reads as an intro not a stutter. */
-const MIN_DURATION = 1700;
+/** Long enough to read as a shuffle, short enough not to be a wait. */
+const MIN_DURATION = 1400;
 const DECK = [0, 1, 2, 3, 4];
 
 /**
- * A blank deck riffling itself while the fonts load — the same cards that will
- * later be the pile, so the first thing you see is already the vocabulary of
- * the site.
+ * The deck riffling itself between "I'll write one" and the blank card
+ * arriving. It doubles as the gate on the handwriting font: the composer never
+ * appears before the face it is set in has loaded.
  */
 export function Loader({ onDone }: LoaderProps) {
   const [progress, setProgress] = useState(0);
@@ -51,7 +51,7 @@ export function Loader({ onDone }: LoaderProps) {
 
   return (
     <motion.div
-      className="absolute inset-0 flex flex-col items-center justify-center gap-14 bg-white"
+      className="absolute inset-0 z-[120] flex flex-col items-center justify-center gap-14 bg-white"
       exit={{ opacity: 0 }}
       transition={{ duration: 0.45 }}
     >
@@ -88,13 +88,13 @@ export function Loader({ onDone }: LoaderProps) {
       </div>
 
       <div className="flex w-[220px] flex-col items-center gap-3">
-        <div className="h-px w-full bg-black/10">
+        <div className="h-px w-full bg-black/15">
           <div
-            className="h-px bg-black/60 transition-[width] duration-200 ease-linear"
+            className="h-px bg-black/75 transition-[width] duration-200 ease-linear"
             style={{ width: `${Math.round(progress * 100)}%` }}
           />
         </div>
-        <p className="text-[11px] tracking-[0.14em] text-black/40 uppercase">
+        <p className="text-[12px] tracking-[0.14em] text-black/55 uppercase">
           shuffling the pile
         </p>
       </div>
