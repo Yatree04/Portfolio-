@@ -19,6 +19,16 @@ export default defineConfig({
       input: {
         main: "index.html",
         mailbox: "mailbox/index.html",
+        /* Not a page — the ribbons bundle the static pages pull in. */
+        ribbons: "src/ribbons-standalone.tsx",
+      },
+      output: {
+        /* That one keeps a predictable name so site.js can link to it. */
+        entryFileNames: function (chunk) {
+          return chunk.name === "ribbons"
+            ? "assets/ribbons.js"
+            : "assets/[name]-[hash].js";
+        },
       },
     },
   },

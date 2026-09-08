@@ -2,6 +2,7 @@ import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import App from "./App";
 import "./index.css";
+import { SiteRibbons } from "./components/SiteRibbons";
 import { PAPER_TEXTURE_URL } from "./sections/onboarding/lib/paper";
 
 // Baked once, then used as a plain background-image by every card.
@@ -16,5 +17,6 @@ if (!container) throw new Error("#root is missing from index.html");
 createRoot(container).render(
   <StrictMode>
     <App />
+    <SiteRibbons />
   </StrictMode>,
 );

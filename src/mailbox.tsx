@@ -1,6 +1,7 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import "./index.css";
+import { SiteRibbons } from "./components/SiteRibbons";
 import { Onboarding } from "./sections/onboarding";
 import { PAPER_TEXTURE_URL } from "./sections/onboarding/lib/paper";
 import { WORKS_URL } from "./routes";
@@ -33,5 +34,6 @@ createRoot(container).render(
         />
       </section>
     </main>
+    <SiteRibbons />
   </StrictMode>,
 );

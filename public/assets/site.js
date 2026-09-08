@@ -112,6 +112,6 @@
   /* The same ribbons the React routes load. */
   var ribbons = document.createElement("script");
   ribbons.src = SITE + "assets/ribbons.js";
-  ribbons.defer = true;
+  ribbons.type = "module";       /* the bundle imports its shared chunk */
   document.body.appendChild(ribbons);
 })();
