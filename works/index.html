@@ -82,11 +82,20 @@
           });
         }
 
+        /* `embed` takes either the URL or the whole <iframe> snippet copied
+           out of Behance's Share -> Embed dialog */
+        function embedSrc(value) {
+          var m = /src\s*=\s*["']([^"']+)["']/i.exec(value);
+          return m ? m[1] : value;
+        }
+
         function media(project) {
           if (project.embed) {
             return (
-              '<iframe src="' + esc(project.embed) + '" loading="lazy" allowfullscreen ' +
-              'title="' + esc(project.title) + ' on Behance"></iframe>'
+              '<iframe src="' + esc(embedSrc(project.embed)) + '" loading="lazy" ' +
+              'allowfullscreen allow="clipboard-write" ' +
+              'referrerpolicy="strict-origin-when-cross-origin" ' +
+              'title="' + esc(project.title || 'Project') + ' on Behance"></iframe>'
             );
           }
           if (project.image) {
