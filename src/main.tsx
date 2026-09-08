@@ -2,7 +2,7 @@ import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import App from "./App";
 import "./index.css";
-import { PAPER_TEXTURE_URL } from "./lib/paper";
+import { PAPER_TEXTURE_URL } from "./sections/onboarding/lib/paper";
 
 // Baked once, then used as a plain background-image by every card.
 document.documentElement.style.setProperty(

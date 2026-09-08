@@ -31,25 +31,50 @@ Pushing to `main` builds and deploys to GitHub Pages
 
 Enter submits from anywhere on the composer; Shift+Enter is a newline.
 
-## How it is put together
+## Sections
+
+The site is a stack of full-viewport, scroll-snapped panels. `App.tsx` renders
+whatever `sections/registry.ts` lists; onboarding is the first and, today, the
+only one. Adding another is one line in the registry plus a folder.
 
 ```
 src/
-  components/
-    NoteCard.tsx      the card itself, at Figma's exact 497x304 geometry
-    Compose.tsx       the writing screen
-    DrawingLayer.tsx  signature_pad ink surface (pen + destination-out eraser)
-    PenToolbar.tsx    the 76x31 pill from the design
-    FlyingCard.tsx    the toss
-    Pile.tsx          the gallery AND the faint backdrop — same component
-    NoteLightbox.tsx  one note, read properly, downloadable as PNG
-  lib/
-    layout.ts         where every card lands, and where it lands on screen
-    paper.ts          the crumpled-paper texture
-    random.ts         seeded PRNG — the pile looks random but never moves
-    store.ts          localStorage notes + seed pile
-    exportCard.ts     html-to-image, with the handwriting font inlined
+  App.tsx                    the shell
+  lib/useViewport.ts         shared across sections
+  sections/
+    registry.ts              SECTIONS — the site, in order
+    onboarding/
+      Onboarding.tsx         the phase machine, self-contained
+      components/
+        NoteCard.tsx         the card, at Figma's exact 497x304 geometry
+        Compose.tsx          the writing screen
+        DrawingLayer.tsx     signature_pad ink (pen + destination-out eraser)
+        PenToolbar.tsx       the 76x31 pill from the design
+        FlyingCard.tsx       the toss
+        Pile.tsx             the gallery AND the faint backdrop — one component
+        NoteLightbox.tsx     one note, read properly, downloadable as PNG
+      lib/
+        layout.ts            where every card lands, and where on screen
+        paper.ts             the crumpled-paper texture
+        random.ts            seeded PRNG — looks random, never moves
+        store.ts             localStorage notes + seed pile
+        exportCard.ts        html-to-image, handwriting font inlined
 ```
+
+`Onboarding` fills whatever wraps it and owns all its own state, so the rest of
+the portfolio can be built alongside without touching any of it. It emits
+`onNoteDropped` if a later section wants to react to a visitor leaving a note.
+
+## Sharing a preview
+
+```bash
+npm run build:preview   # -> dist/preview.html
+```
+
+`scripts/bundle-single-file.mjs` flattens the build into one HTML file with the
+CSS, the JS and the handwriting font inlined, for hosts that serve a single page
+and no `/assets`. Note that sandboxed viewers block page-initiated downloads, so
+"save as png" only works from a real deployment or `npm run dev`.
 
 ### The pile never reshuffles
 

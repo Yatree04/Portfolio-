@@ -80,7 +80,7 @@ export function NoteCard({
           )}
         </p>
 
-        <p className="hand absolute left-[239px] top-[257px] max-w-[228px] truncate capitalize">
+        <p className="hand absolute left-[239px] top-[257px] max-w-[238px] truncate capitalize">
           From, {name}
         </p>
 

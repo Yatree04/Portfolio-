@@ -1,5 +1,8 @@
 import { toPng } from "html-to-image";
 
+/** Where the handwriting face is served from in a normal build. */
+const FONT_URL = "/QEBradenHill.ttf";
+
 /**
  * html-to-image otherwise walks every stylesheet on the page to inline fonts,
  * which throws on the cross-origin Google Fonts sheet and is slow. The card
@@ -7,13 +10,43 @@ import { toPng } from "html-to-image";
  */
 let handwritingCss: Promise<string> | null = null;
 
+/** Pull the @font-face this page already declares, if it carries the bytes. */
+function fontFaceFromStyleSheets(): string | null {
+  for (const sheet of Array.from(document.styleSheets)) {
+    let rules: CSSRuleList;
+    try {
+      rules = sheet.cssRules;
+    } catch {
+      // Cross-origin sheet (Google Fonts) — not ours to read, and not needed.
+      continue;
+    }
+    for (const rule of Array.from(rules)) {
+      const text = rule.cssText;
+      // cssText may serialise the src as url(data:…) or url("data:…").
+      if (
+        text.startsWith("@font-face") &&
+        text.includes("Handwriting") &&
+        /url\(["']?data:/.test(text)
+      ) {
+        return text;
+      }
+    }
+  }
+  return null;
+}
+
 function embedHandwritingFont(): Promise<string> {
   handwritingCss ??= (async () => {
+    // A single-file build already inlines the face as a data: URI, and there
+    // is no /QEBradenHill.ttf to fetch. Prefer whatever the page declares.
+    const declared = fontFaceFromStyleSheets();
+    if (declared) return declared;
+
     try {
-      const response = await fetch("/QEBradenHill.ttf");
-      const buffer = await response.arrayBuffer();
+      const response = await fetch(FONT_URL);
+      if (!response.ok) return "";
+      const bytes = new Uint8Array(await response.arrayBuffer());
       let binary = "";
-      const bytes = new Uint8Array(buffer);
       for (let i = 0; i < bytes.length; i++) {
         binary += String.fromCharCode(bytes[i]!);
       }
@@ -27,13 +60,6 @@ function embedHandwritingFont(): Promise<string> {
   return handwritingCss;
 }
 
-/**
- * Rasterise a rendered card to a PNG data URL.
- *
- * This is the hand-off point for a real gallery backend: the same data URL can
- * be POSTed instead of (or as well as) being downloaded. Failures are not
- * fatal — a note that could not be rasterised still drops into the pile.
- */
 export async function exportCardPng(
   node: HTMLElement,
   pixelRatio = 2,
