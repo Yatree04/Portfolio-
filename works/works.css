@@ -172,6 +172,13 @@ a { text-decoration: none; color: inherit; }
   background: var(--card-bg);
 }
 
+/* The Behance embed is 404 x 316 natively while the design's cover box is
+   602 x 399.2. If the embeds letterboxes inside it, uncomment this to switch
+   the cover box to their proportion:
+
+.card-media:has(iframe) { aspect-ratio: 404 / 316; }
+*/
+
 .card-media img,
 .card-media iframe {
   display: block;

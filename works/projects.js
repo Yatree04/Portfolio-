@@ -38,14 +38,46 @@ window.WORKS_PROJECTS = [
     title: "",
     description: "",
   },
-
-  // Remaining projects go here — same shape, one object per project:
-  //
-  // {
-  //   embed: "https://www.behance.net/embed/project/<id>?ilo0=1",
-  //   url: "https://www.behance.net/gallery/<id>/<slug>",
-  //   eyebrow: "PRODUCT MANAGEMENT | UX STRATEGY",
-  //   title: "Project name",
-  //   description: "Blurb from the project page.",
-  // },
+  {
+    // https://www.behance.net/gallery/255342321
+    embed: "https://www.behance.net/embed/project/255342321?ilo0=1",
+    eyebrow: "",
+    title: "",
+    description: "",
+  },
+  {
+    // https://www.behance.net/gallery/255274663
+    embed: "https://www.behance.net/embed/project/255274663?ilo0=1",
+    eyebrow: "",
+    title: "",
+    description: "",
+  },
+  {
+    // https://www.behance.net/gallery/255306649
+    embed: "https://www.behance.net/embed/project/255306649?ilo0=1",
+    eyebrow: "",
+    title: "",
+    description: "",
+  },
+  {
+    // https://www.behance.net/gallery/255261283
+    embed: "https://www.behance.net/embed/project/255261283?ilo0=1",
+    eyebrow: "",
+    title: "",
+    description: "",
+  },
+  {
+    // https://www.behance.net/gallery/247432273
+    embed: "https://www.behance.net/embed/project/247432273?ilo0=1",
+    eyebrow: "",
+    title: "",
+    description: "",
+  },
+  {
+    // https://www.behance.net/gallery/253628357
+    embed: "https://www.behance.net/embed/project/253628357?ilo0=1",
+    eyebrow: "",
+    title: "",
+    description: "",
+  },
 ];
