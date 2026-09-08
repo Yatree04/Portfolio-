@@ -109,9 +109,9 @@
   document.body.insertBefore(header, document.body.firstChild);
   document.body.appendChild(footer);
 
-  /* The same cursor the React routes load. */
-  var cursor = document.createElement("script");
-  cursor.src = SITE + "assets/cursor.js";
-  cursor.defer = true;
-  document.body.appendChild(cursor);
+  /* The same ribbons the React routes load. */
+  var ribbons = document.createElement("script");
+  ribbons.src = SITE + "assets/ribbons.js";
+  ribbons.defer = true;
+  document.body.appendChild(ribbons);
 })();
