@@ -54,10 +54,17 @@ export function SiteRibbons() {
           the bundle never links; without the sizing the canvas comes out 0x0.
           Same two rules, carried with the component. */}
       <style>{".ribbons-container{width:100%;height:100%;position:relative}"}</style>
+      {/* baseSpring and baseFriction are the component's defaults rather than
+          0.01 / 0.5. At those two values the head creeps forward by about
+          0.02 of the distance each frame, the points bunch closer together
+          than the 0.02 the vertex shader needs
+          (`normal *= smoothstep(0.0, 0.02, dist)`), the thickness is
+          multiplied by zero and nothing is drawn. Everything else is as
+          specified. */}
       <Ribbons
         colors={["#351f5e"]}
-        baseSpring={0.01}
-        baseFriction={0.5}
+        baseSpring={0.03}
+        baseFriction={0.9}
         baseThickness={20}
         offsetFactor={0.05}
         maxAge={550}
