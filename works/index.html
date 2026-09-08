@@ -96,14 +96,18 @@
         }
 
         projects.forEach(function (project, i) {
-          var card = document.createElement('a');
+          /* an embed is interactive and links to Behance on its own, so those
+             cards are plain containers rather than anchors */
+          var card = document.createElement(project.embed ? 'div' : 'a');
           card.className = 'card';
           card.style.setProperty('--order', i);   /* keeps source order when the
                                                      grid collapses to one column */
-          card.href = project.url || '#';
-          if (/^https?:/.test(card.getAttribute('href'))) {
-            card.target = '_blank';
-            card.rel = 'noopener';
+          if (!project.embed) {
+            card.href = project.url || '#';
+            if (/^https?:/.test(card.getAttribute('href'))) {
+              card.target = '_blank';
+              card.rel = 'noopener';
+            }
           }
 
           card.innerHTML =
@@ -113,15 +117,23 @@
                 ? '<span class="card-badge">under construction</span>'
                 : '') +
             '</div>' +
-            '<div class="card-text">' +
-              '<p class="card-eyebrow"></p>' +
-              '<h3 class="card-title"></h3>' +
-              '<p class="card-desc"></p>' +
-            '</div>';
+            /* a Behance embed already shows the title, so the text block is
+               only rendered for the fields that are actually filled in */
+            (project.eyebrow || project.title || project.description
+              ? '<div class="card-text">' +
+                  (project.eyebrow ? '<p class="card-eyebrow"></p>' : '') +
+                  (project.title ? '<h3 class="card-title"></h3>' : '') +
+                  (project.description ? '<p class="card-desc"></p>' : '') +
+                '</div>'
+              : '');
 
-          card.querySelector('.card-eyebrow').textContent = project.eyebrow || '';
-          card.querySelector('.card-title').textContent = project.title || '';
-          card.querySelector('.card-desc').textContent = project.description || '';
+          var set = function (sel, value) {
+            var el = card.querySelector(sel);
+            if (el) el.textContent = value;
+          };
+          set('.card-eyebrow', project.eyebrow);
+          set('.card-title', project.title);
+          set('.card-desc', project.description);
 
           cols[i % cols.length].appendChild(card);
         });

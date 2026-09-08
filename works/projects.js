@@ -10,74 +10,41 @@
  *   image        Cover image URL or local path      (omit for the grey placeholder block)
  *   status       "under-construction" shows the hover badge from the design
  *
- * Embedding Behance later
+ * Adding the rest of the Behance projects
  * ---------------------------------------------------------------------------
- * Behance has no public no-key API any more, so the two practical options are:
+ * Live embed (what the first entry uses). On Behance open the project, hit
+ * Share -> Embed, and copy the number out of the iframe's src:
  *
- * 1. Cover image + link (recommended, what this file is shaped for).
- *    Open the project on Behance, copy the cover image URL (or download it into
- *    /assets/works/) and paste the project URL into `url`:
+ *     <iframe src="https://www.behance.net/embed/project/255227267?ilo0=1" ...>
+ *                                                       ^^^^^^^^^
+ * then add an entry with that src in `embed`. The embed renders the Behance
+ * cover itself, so a card can leave `title`/`description` empty and the text
+ * block below the cover is skipped.
  *
- *      { title: "Radiate", url: "https://www.behance.net/gallery/123456789/Radiate",
- *        image: "/assets/works/radiate.jpg", ... }
+ * Cover image instead of an embed: set `image` to the cover URL (or drop the
+ * file into /assets/works/ and point at it) and `url` to the project link.
  *
- * 2. Live embed. Behance gives an <iframe> per project under Share -> Embed.
- *    Put that iframe's src in `embed` and the card renders it in place of the
- *    cover image:
+ * Or run the importer to fill this file in automatically, titles, blurbs,
+ * fields and covers included:
  *
- *      { title: "Radiate", embed: "https://www.behance.net/embed/project/123456789?ilo0=1", ... }
- *
- * Replace the placeholders below and the grid re-flows on its own.
+ *     node works/import-behance.mjs yatripatel --download
  */
 window.WORKS_PROJECTS = [
   {
-    eyebrow: "PRODUCT MANAGEMENT | UX STRATEGY",
-    title: "Google Stitch",
-    description: "Loren Ipsum and dummy text and dummy texts",
-    url: "#",
+    // https://www.behance.net/gallery/255227267
+    embed: "https://www.behance.net/embed/project/255227267?ilo0=1",
+    eyebrow: "",
+    title: "",
+    description: "",
   },
-  {
-    eyebrow: "PRODUCT MANAGEMENT | UX STRATEGY",
-    title: "Google Stitch",
-    description: "Loren Ipsum and dummy text and dummy texts",
-    url: "#",
-  },
-  {
-    eyebrow: "PRODUCT MANAGEMENT | UX STRATEGY",
-    title: "Google Stitch",
-    description: "Loren Ipsum and dummy text and dummy texts\nLoren Ipsum and dummy text and dummy texts",
-    url: "#",
-  },
-  {
-    eyebrow: "PRODUCT MANAGEMENT | UX STRATEGY",
-    title: "Google Stitch",
-    description: "Loren Ipsum and dummy text and dummy texts\nLoren Ipsum and dummy text and dummy texts\nLoren Ipsum and dummy text and dummy texts",
-    url: "#",
-  },
-  {
-    eyebrow: "PRODUCT MANAGEMENT | UX STRATEGY",
-    title: "Google Stitch",
-    description: "Loren Ipsum and dummy text and dummy texts\nLoren Ipsum and dummy text and dummy texts",
-    url: "#",
-    status: "under-construction",
-  },
-  {
-    eyebrow: "PRODUCT MANAGEMENT | UX STRATEGY",
-    title: "Google Stitch",
-    description: "Loren Ipsum and dummy text and dummy texts\nLoren Ipsum and dummy text and dummy texts",
-    url: "#",
-  },
-  {
-    eyebrow: "PRODUCT MANAGEMENT | UX STRATEGY",
-    title: "Google Stitch",
-    description: "Loren Ipsum and dummy text and dummy texts\nLoren Ipsum and dummy text and dummy texts",
-    url: "#",
-  },
-  {
-    eyebrow: "PRODUCT MANAGEMENT | UX STRATEGY",
-    title: "Google Stitch",
-    description: "Loren Ipsum and dummy text and dummy texts\nLoren Ipsum and dummy text and dummy texts",
-    url: "#",
-    status: "under-construction",
-  },
+
+  // Remaining projects go here — same shape, one object per project:
+  //
+  // {
+  //   embed: "https://www.behance.net/embed/project/<id>?ilo0=1",
+  //   url: "https://www.behance.net/gallery/<id>/<slug>",
+  //   eyebrow: "PRODUCT MANAGEMENT | UX STRATEGY",
+  //   title: "Project name",
+  //   description: "Blurb from the project page.",
+  // },
 ];
