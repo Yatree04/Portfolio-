@@ -4,14 +4,27 @@
  * Each page sets `data-page` on <body>; this renders the nav pill and the
  * footer from the one list below, so a route is added in one place. The
  * onboarding and the mailbox are the React app and carry their own chrome.
+ *
+ * Links are built from this script's own URL rather than from "/", so the
+ * site works wherever it is mounted — yatree04.github.io/Portfolio-/ today,
+ * a domain root later — without a rebuild.
  */
 (function () {
+  var SITE = (function () {
+    var self = document.currentScript;
+    if (!self) {
+      var all = document.getElementsByTagName("script");
+      self = all[all.length - 1];
+    }
+    return (self && self.src ? self.src : "").replace(/assets\/site\.js.*$/, "");
+  })();
+
   var NAV = [
-    { id: "mailbox", label: "MAILBOX", href: "/mailbox/" },
-    { id: "works", label: "WORKS", href: "/works/" },
-    { id: "playground", label: "PLAYGROUND", href: "/playground/" },
-    { id: "about", label: "ABOUT", href: "/about/" },
-    { id: "resume", label: "RESUME", href: "/resume/" },
+    { id: "mailbox", label: "MAILBOX", href: SITE + "mailbox/" },
+    { id: "works", label: "WORKS", href: SITE + "works/" },
+    { id: "playground", label: "PLAYGROUND", href: SITE + "playground/" },
+    { id: "about", label: "ABOUT", href: SITE + "about/" },
+    { id: "resume", label: "RESUME", href: SITE + "resume/" },
   ];
 
   var SOCIAL = [
@@ -57,7 +70,7 @@
     '<div class="footer-inner">' +
       '<p class="footer-copy">© 2026, Vibe coded in Antigravity and Claude Code by me :)</p>' +
       '<nav class="footer-nav" aria-label="Footer">' +
-        '<a href="/">HOME</a>' +
+        '<a href="' + SITE + '">HOME</a>' +
         NAV.map(function (item) {
           return '<a href="' + item.href + '">' + item.label + "</a>";
         }).join("") +

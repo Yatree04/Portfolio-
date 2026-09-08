@@ -5,7 +5,7 @@
  */
 
 /** The main site — hero, featured works, and the nav to everything else. */
-export const WORKS_URL = "/works/";
+export const WORKS_URL = `${import.meta.env.BASE_URL}works/`;
 
 /** The pile of letters, on its own route. */
-export const MAILBOX_URL = "/mailbox/";
+export const MAILBOX_URL = `${import.meta.env.BASE_URL}mailbox/`;
