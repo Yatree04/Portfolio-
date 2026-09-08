@@ -9,6 +9,10 @@ architecture; this file is the set of conventions to hold to.
   carries `components/BackButton`, top-left. Nothing on this site is a one-way
   trip. The only exemptions are the very first screen (nothing to go back to)
   and momentary transitions the visitor cannot act on.
+- **One nav, one list.** The static pages (works, playground, about, resume)
+  get their header pill and footer from `public/assets/site.js`; a new
+  destination is one entry in its `NAV` array, never hand-written markup in a
+  page. The React routes carry `BackButton` instead.
 - **Sections are self-contained.** A section lives under `src/sections/<name>/`,
   owns its own state, and fills whatever wraps it. Register it in
   `src/sections/registry.ts`; the shell hands it `onAdvance` to move on to the

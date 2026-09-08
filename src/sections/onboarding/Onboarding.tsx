@@ -35,6 +35,16 @@ function prefersReducedMotion(): boolean {
 export interface OnboardingProps extends SectionProps {
   /** Fires once a visitor's note has landed in the pile. */
   onNoteDropped?: (note: Note) => void;
+  /**
+   * Where the section opens. The mailbox mounts straight into the pile;
+   * everywhere else starts at the door.
+   */
+  initialPhase?: Phase;
+  /**
+   * Leaves the section entirely. Given by routes that were reached from
+   * somewhere else — the mailbox goes back to the site, not to the door.
+   */
+  onExit?: () => void;
 }
 
 /**
@@ -44,15 +54,20 @@ export interface OnboardingProps extends SectionProps {
  * phase machine and fills whichever section wraps it, so the rest of the site
  * can be built alongside it without touching any of this.
  */
-export function Onboarding({ onAdvance, onNoteDropped }: OnboardingProps) {
+export function Onboarding({
+  onAdvance,
+  onNoteDropped,
+  initialPhase = "welcome",
+  onExit,
+}: OnboardingProps) {
   const viewport = useViewport();
   const [notes, setNotes] = useState<Note[]>([]);
-  const [phase, setPhase] = useState<Phase>("welcome");
+  const [phase, setPhase] = useState<Phase>(initialPhase);
   const [flyingNote, setFlyingNote] = useState<Note | null>(null);
   const [flight, setFlight] = useState<Flight | null>(null);
   const [openNote, setOpenNote] = useState<Note | null>(null);
   /** The greeting types itself once; coming back to the door is instant. */
-  const [greeted, setGreeted] = useState(false);
+  const [greeted, setGreeted] = useState(initialPhase !== "welcome");
   const [exportTarget, setExportTarget] = useState<Note | null>(null);
 
   useEffect(() => setNotes(loadNotes()), []);
@@ -185,7 +200,8 @@ export function Onboarding({ onAdvance, onNoteDropped }: OnboardingProps) {
           count={notes.length}
           muted={openNote !== null}
           onCompose={() => setPhase("shuffling")}
-          onBack={() => setPhase("welcome")}
+          onBack={onExit ?? (() => setPhase("welcome"))}
+          onViewWork={onAdvance}
         />
       )}
 

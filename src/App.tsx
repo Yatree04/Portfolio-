@@ -1,11 +1,6 @@
 import { useCallback } from "react";
 import { SECTIONS } from "./sections/registry";
-
-/**
- * The works page is its own document under `public/works/`, not a section, so
- * moving on from the last section is a navigation rather than a scroll.
- */
-const WORKS_URL = "/works/";
+import { WORKS_URL } from "./routes";
 
 /**
  * The site shell. Sections are full-viewport panels stacked in a scroll-snap
@@ -31,6 +26,7 @@ export default function App() {
             id={id}
             className="relative h-full w-full snap-start overflow-hidden"
           >
+            {/* Past the last section the site continues as its own pages. */}
             <Component
               onAdvance={
                 next

@@ -6,6 +6,8 @@ export interface GalleryChromeProps {
   count: number;
   onCompose: () => void;
   onBack: () => void;
+  /** Goes on to the rest of the site. */
+  onViewWork?: () => void;
   /** Suppressed while a note is being read. */
   muted: boolean;
 }
@@ -15,6 +17,7 @@ export function GalleryChrome({
   count,
   onCompose,
   onBack,
+  onViewWork,
   muted,
 }: GalleryChromeProps) {
   useEffect(() => {
@@ -50,7 +53,7 @@ export function GalleryChrome({
         )}
       </div>
 
-      <div className="absolute inset-x-0 bottom-8 flex justify-center">
+      <div className="absolute inset-x-0 bottom-8 flex justify-center gap-3">
         <button
           type="button"
           onClick={onCompose}
@@ -58,6 +61,15 @@ export function GalleryChrome({
         >
           leave one too
         </button>
+        {onViewWork && (
+          <button
+            type="button"
+            onClick={onViewWork}
+            className="pointer-events-auto cursor-pointer rounded-full border border-brown bg-transparent px-7 py-3 text-[15px] text-brown transition-colors hover:bg-brown hover:text-cream"
+          >
+            view work
+          </button>
+        )}
       </div>
     </motion.div>
   );

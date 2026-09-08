@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Resume — Yatri Patel</title>
+    <meta name="description" content="Yatri Patel's resume." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Darker+Grotesque:wght@500&family=Fragment+Mono&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/assets/site.css" />
+  </head>
+  <body data-page="resume">
+    <main>
+      <section class="page">
+        <h1 class="page-title">resume</h1>
+        <p class="page-lede">the short version, on one page.</p>
+
+        <!-- Drop the file in at public/assets/resume.pdf and this fills in.
+             Until then the fallback below is what a visitor sees. -->
+        <div class="pdf-frame">
+          <object data="/assets/resume.pdf" type="application/pdf">
+            <div class="pdf-missing">
+              <p>the pdf is not up here yet.</p>
+              <p>
+                in the meantime, my
+                <a href="https://www.linkedin.com/in/yatripatel/" target="_blank" rel="noopener">linkedin</a>
+                has the same story.
+              </p>
+            </div>
+          </object>
+        </div>
+
+        <p class="page-note">
+          <a href="/assets/resume.pdf" download>download the pdf</a>
+        </p>
+      </section>
+    </main>
+
+    <script src="/assets/site.js"></script>
+  </body>
+</html>

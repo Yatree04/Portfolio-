@@ -32,6 +32,29 @@ Pushing to `main` builds and deploys to GitHub Pages
 Enter submits from anywhere on the composer; Shift+Enter is a newline. Every
 screen past the door carries a back button — see `CLAUDE.md`.
 
+## Routes
+
+The information architecture, as built:
+
+| URL            | What it is                          | Where it lives                    |
+| -------------- | ----------------------------------- | --------------------------------- |
+| `/`            | Onboarding — the door, then the card | `src/` (React, `index.html`)      |
+| `/mailbox/`    | The pile of letters                  | `src/mailbox.tsx`, `mailbox/index.html` |
+| `/works/`      | The main site: hero + featured works | `public/works/`                   |
+| `/playground/` | Coming soon                          | `public/playground/`              |
+| `/about/`      | About                                | `public/about/`                   |
+| `/resume/`     | Résumé PDF                           | `public/resume/`                  |
+
+Onboarding and the mailbox are the React app; the other four are plain HTML
+under `public/`, copied into `dist` untouched. They share one nav pill and
+footer, injected by `public/assets/site.js` from a single list — add a route
+there and every page picks it up. Work tiles come from
+`public/works/projects.js`; `scripts/import-behance.mjs` can refill it from a
+Behance profile.
+
+Leaving onboarding — the door's "view work", its Escape shortcut, and the
+pile's "view work" — goes to `/works/`.
+
 ## Sections
 
 The site is a stack of full-viewport, scroll-snapped panels. `App.tsx` renders
