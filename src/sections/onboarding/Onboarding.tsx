@@ -17,6 +17,7 @@ import {
   layoutPile,
   pileBounds,
 } from "./lib/layout";
+import type { SectionProps } from "../registry";
 import { createNote, loadNotes, persistNotes } from "./lib/store";
 import { usePointerParallax } from "./lib/usePointerParallax";
 import type { Note, Phase } from "./types";
@@ -31,7 +32,7 @@ function prefersReducedMotion(): boolean {
   );
 }
 
-export interface OnboardingProps {
+export interface OnboardingProps extends SectionProps {
   /** Fires once a visitor's note has landed in the pile. */
   onNoteDropped?: (note: Note) => void;
 }
@@ -43,7 +44,7 @@ export interface OnboardingProps {
  * phase machine and fills whichever section wraps it, so the rest of the site
  * can be built alongside it without touching any of this.
  */
-export function Onboarding({ onNoteDropped }: OnboardingProps) {
+export function Onboarding({ onAdvance, onNoteDropped }: OnboardingProps) {
   const viewport = useViewport();
   const [notes, setNotes] = useState<Note[]>([]);
   const [phase, setPhase] = useState<Phase>("loading");
@@ -120,6 +121,16 @@ export function Onboarding({ onNoteDropped }: OnboardingProps) {
     [notes, onNoteDropped, viewport],
   );
 
+  /**
+   * Not everyone arrives wanting to be greeted. Skipping settles the section
+   * on the pile — so scrolling back later shows the notes, not the intro —
+   * and then moves on to the next section if the site has one yet.
+   */
+  const handleSkip = useCallback(() => {
+    setPhase("gallery");
+    onAdvance?.();
+  }, [onAdvance]);
+
   const handleArrived = useCallback(() => {
     setFlyingNote(null);
     setFlight(null);
@@ -158,6 +169,8 @@ export function Onboarding({ onNoteDropped }: OnboardingProps) {
             key="welcome"
             noteCount={notes.length}
             onBegin={() => setPhase("compose")}
+            onSkip={handleSkip}
+            skipLabel={onAdvance ? "skip to the rest" : "skip straight to the notes"}
           />
         )}
 

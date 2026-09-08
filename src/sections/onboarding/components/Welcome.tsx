@@ -4,6 +4,10 @@ import { useTypewriter } from "../lib/useTypewriter";
 
 export interface WelcomeProps {
   onBegin: () => void;
+  /** Leaves the intro without writing anything. Also bound to Escape. */
+  onSkip: () => void;
+  /** What skipping actually lands you on, so the link can say so. */
+  skipLabel: string;
   /** How many notes are already lying in the pile behind this. */
   noteCount: number;
 }
@@ -12,9 +16,15 @@ const LINE_ONE = "hi, welcome to my world.";
 const LINE_TWO = "leave me something to ponder over.";
 
 /**
- * The doorway. Two typed lines, then Enter drops you into the composer.
+ * The doorway. Two typed lines, then Enter drops you into the composer — or
+ * Escape, for anyone who came here to look at the work rather than be greeted.
  */
-export function Welcome({ onBegin, noteCount }: WelcomeProps) {
+export function Welcome({
+  onBegin,
+  onSkip,
+  skipLabel,
+  noteCount,
+}: WelcomeProps) {
   const first = useTypewriter(LINE_ONE, { speed: 46, startDelay: 260 });
   const second = useTypewriter(LINE_TWO, {
     speed: 34,
@@ -27,11 +37,14 @@ export function Welcome({ onBegin, noteCount }: WelcomeProps) {
       if (event.key === "Enter" || event.key === " ") {
         event.preventDefault();
         onBegin();
+      } else if (event.key === "Escape") {
+        event.preventDefault();
+        onSkip();
       }
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [onBegin]);
+  }, [onBegin, onSkip]);
 
   return (
     <motion.div
@@ -70,6 +83,19 @@ export function Welcome({ onBegin, noteCount }: WelcomeProps) {
         {noteCount} {noteCount === 1 ? "note is" : "notes are"} already in the
         pile
       </motion.p>
+
+      <motion.button
+        type="button"
+        onClick={onSkip}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: second.done ? 1 : 0 }}
+        transition={{ duration: 0.6, delay: 0.55 }}
+        className="mt-7 cursor-pointer text-[11px] text-black/35 transition-colors hover:text-black/70"
+      >
+        {skipLabel} <span aria-hidden>&rarr;</span>
+        {/* Pointless on a touch device, where there is no esc to press. */}
+        <kbd className="key ml-2 hidden sm:inline">esc</kbd>
+      </motion.button>
     </motion.div>
   );
 }
