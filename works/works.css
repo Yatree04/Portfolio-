@@ -1,0 +1,370 @@
+/* Works page — implements Figma "1920w light" (node 89:6239).
+   Plain CSS so the page can be served as-is by GitHub Pages, like the rest of
+   the repo. Measurements below come from the 1920px-wide Figma frame. */
+
+:root {
+  --paper: #fcfcfc;
+  --ink: #352b38;          /* hero heading            */
+  --plum: #705b77;         /* section + card headings */
+  --plum-deep: #5b445b;    /* active nav pill         */
+  --muted: #8c8a98;        /* eyebrows, body copy     */
+  --body: #646464;         /* hero subtitle           */
+  --card-bg: #f3f3f4;
+  --card-placeholder: #4c4c4c;
+  --footer-bg: #1b191b;
+  --footer-line: #272630;
+  --footer-chip: #2a2830;
+
+  --mono: "DM Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  --mono-alt: "Fragment Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  --display: "Google Sans Flex", "Google Sans", "Product Sans", system-ui,
+             -apple-system, Segoe UI, sans-serif;
+  --title: "Darker Grotesque", var(--display);
+
+  /* 1249px content column === the 1920px frame minus its 336px side margins */
+  --content: 1249px;
+  --footer-content: 1280px;
+}
+
+* { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--mono-alt);
+  -webkit-font-smoothing: antialiased;
+}
+
+a { text-decoration: none; color: inherit; }
+
+/* ---------------------------------------------------------------- header */
+
+.site-header {
+  position: sticky;
+  top: 16px;
+  z-index: 20;
+  display: flex;
+  justify-content: center;
+  padding: 0 20px;
+}
+
+.nav-pill {
+  display: flex;
+  align-items: center;
+  gap: 54px;
+  height: 84px;
+  padding: 0 42.77px;              /* 18.33px list inset + 24.44px pill pad */
+  border: 1.527px solid rgba(91, 68, 91, 0.45);
+  border-radius: 50.4px;
+  background: var(--paper);
+  font-family: var(--mono-alt);
+  font-size: 21.382px;
+  letter-spacing: -0.8553px;
+  line-height: 32.073px;
+  color: var(--muted);
+  white-space: nowrap;
+}
+
+.nav-pill a { transition: color 0.2s ease; }
+.nav-pill a:hover { color: var(--plum); }
+
+.nav-pill a.is-active {
+  display: inline-flex;
+  align-items: center;
+  height: 56.509px;
+  margin: 0 -24.44px;              /* pill bleeds into the 54px text gap    */
+  padding: 0 24.44px;
+  border-radius: 30.545px;
+  background: var(--plum-deep);
+  color: #fff;
+  font-family: var(--mono);
+}
+
+.nav-pill a.is-active:hover { color: #fff; }
+
+/* ------------------------------------------------------------------ hero */
+
+.hero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  min-height: 664px;
+  margin-top: -84px;               /* header is sticky and overlays the top */
+  padding: 84px 20px 98px;
+  text-align: center;
+}
+
+.hero h1 {
+  margin: 0;
+  font-family: var(--display);
+  font-weight: 500;
+  font-size: 32px;
+  line-height: 32px;
+  letter-spacing: 1px;
+  color: var(--ink);
+}
+
+.hero p {
+  width: min(646px, 100%);
+  margin: 26px 0 0;
+  font-family: var(--mono-alt);
+  font-size: 20px;
+  line-height: 28px;
+  letter-spacing: -0.8px;
+  color: var(--body);
+}
+
+/* ------------------------------------------------------------- works grid */
+
+.works {
+  width: min(var(--content), 100% - 40px);
+  margin: 0 auto;
+  padding-top: 128px;
+}
+
+.works h2 {
+  margin: 0 0 76px;
+  font-family: var(--display);
+  font-weight: 300;
+  font-size: 32px;
+  line-height: 40px;
+  letter-spacing: 0.9px;
+  color: var(--plum);
+}
+
+.works-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  column-gap: 32.5px;
+  align-items: start;
+}
+
+.works-col {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  min-width: 0;
+}
+
+/* ----------------------------------------------------------------- card */
+
+.card {
+  display: block;
+  padding: 3px;
+  border-radius: 19px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 18px 40px -24px rgba(53, 43, 56, 0.45);
+}
+
+.card-media {
+  position: relative;
+  aspect-ratio: 602 / 399.2;       /* Figma cover block: 602 x 399.2 */
+  overflow: hidden;
+  border-radius: 16px;
+  background: var(--card-bg);
+}
+
+.card-media img,
+.card-media iframe {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  object-fit: cover;
+}
+
+.card-media .placeholder {
+  width: 100%;
+  height: 100%;
+  background: var(--card-placeholder);
+}
+
+.card-badge {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  height: 37px;
+  padding: 0 16px;
+  border-radius: 10px;
+  background: rgba(0, 0, 0, 0.7);
+  font-family: var(--mono-alt);
+  font-size: 14px;
+  line-height: 21px;
+  color: var(--paper);
+  opacity: 0;
+  transition: opacity 0.25s ease;
+}
+
+.card:hover .card-badge,
+.card:focus-visible .card-badge { opacity: 1; }
+
+.card-text {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding-top: 19px;               /* 421.2 - (3 + 399.2) */
+}
+
+.card-eyebrow {
+  margin: 0;
+  font-family: var(--mono);
+  font-size: 16px;
+  line-height: 28px;
+  letter-spacing: -0.8px;
+  color: var(--muted);
+}
+
+.card-title {
+  margin: 0;
+  font-family: var(--title);
+  font-weight: 500;
+  font-size: 30px;
+  line-height: 36px;
+  color: var(--plum);
+}
+
+.card-desc {
+  margin: 0;
+  font-family: var(--mono-alt);
+  font-size: 20px;
+  line-height: 28px;
+  letter-spacing: -0.8px;
+  color: var(--muted);
+  white-space: pre-line;           /* "\n" in the data makes a new line */
+}
+
+/* --------------------------------------------------------------- footer */
+
+.site-footer {
+  margin-top: 244px;
+  border-top: 1px solid var(--footer-line);
+  background: var(--footer-bg);
+}
+
+.footer-inner {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 40px;
+  width: min(var(--footer-content), 100% - 40px);
+  min-height: 316px;
+  margin: 0 auto;
+  padding-top: 42px;
+}
+
+.footer-copy {
+  width: 392px;
+  max-width: 100%;
+  margin: 0;
+  font-family: var(--mono);
+  font-size: 20px;
+  line-height: 42px;
+  color: #fff;
+}
+
+.footer-nav {
+  position: absolute;
+  left: 50%;
+  top: 64px;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 23.7px;
+  font-family: var(--mono-alt);
+  font-size: 14px;
+  line-height: 21px;
+  color: var(--muted);
+  white-space: nowrap;
+}
+
+.footer-nav a { transition: color 0.2s ease; }
+.footer-nav a:hover { color: #fff; }
+
+.footer-social {
+  display: flex;
+  gap: 8px;
+  margin-top: 22px;                /* aligns the 36px chips to y = 64 */
+}
+
+.footer-social a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  background: var(--footer-chip);
+  color: #fff;
+  transition: background 0.2s ease;
+}
+
+.footer-social a:hover { background: #3a3743; }
+
+.footer-social svg {
+  width: 16px;
+  height: 16px;
+  fill: currentColor;
+}
+
+/* ----------------------------------------------------------- responsive */
+
+@media (max-width: 1100px) {
+  /* one column: the two column wrappers dissolve so cards keep source order */
+  .works-grid { display: flex; flex-direction: column; gap: 32px; }
+  .works-col { display: contents; }
+  .card { order: var(--order, 0); }
+  .footer-inner {
+    flex-direction: column;
+    align-items: flex-start;
+    min-height: 0;
+    padding-bottom: 48px;
+  }
+  .footer-nav {
+    position: static;
+    transform: none;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+  .footer-social { margin-top: 0; }
+  .site-footer { margin-top: 160px; }
+}
+
+@media (max-width: 760px) {
+  .nav-pill {
+    gap: 26px;
+    height: 62px;
+    padding: 0 26px;
+    font-size: 15px;
+    border-radius: 40px;
+  }
+  .nav-pill a.is-active {
+    height: 42px;
+    margin: 0 -14px;
+    padding: 0 14px;
+    border-radius: 22px;
+  }
+  .hero { min-height: 480px; padding-bottom: 64px; }
+  .hero h1 { font-size: 26px; line-height: 30px; }
+  .hero p { font-size: 17px; line-height: 25px; }
+  .works { padding-top: 80px; }
+  .works h2 { font-size: 26px; margin-bottom: 44px; }
+  .card-title { font-size: 26px; line-height: 32px; }
+  .card-desc { font-size: 17px; line-height: 25px; }
+  .footer-copy { font-size: 16px; line-height: 32px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; }
+  html { scroll-behavior: auto; }
+  .card:hover { transform: none; }
+}
