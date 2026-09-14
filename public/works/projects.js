@@ -18,5 +18,4 @@ window.WORKS_PROJECTS = [
   { embed: "https://www.behance.net/embed/project/255342321?ilo0=1" },
   { embed: "https://www.behance.net/embed/project/255261283?ilo0=1" },
   { embed: "https://www.behance.net/embed/project/247432273?ilo0=1" },
-  { embed: "https://www.behance.net/embed/project/253628357?ilo0=1" },
 ];
