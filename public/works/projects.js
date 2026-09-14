@@ -14,7 +14,8 @@
 window.WORKS_PROJECTS = [
   { embed: "https://www.behance.net/embed/project/255306649?ilo0=1" },
   { embed: "https://www.behance.net/embed/project/255274663?ilo0=1" },
-  { embed: "https://www.behance.net/embed/project/255227267?ilo0=1" },
+  // hideHeader drops Behance's own title bar from the embed
+  { embed: "https://www.behance.net/embed/project/255227267?ilo0=1&hideHeader=1" },
   { embed: "https://www.behance.net/embed/project/255342321?ilo0=1" },
   { embed: "https://www.behance.net/embed/project/255261283?ilo0=1" },
   { embed: "https://www.behance.net/embed/project/247432273?ilo0=1" },
