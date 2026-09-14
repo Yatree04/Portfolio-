@@ -6,13 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Resume — Yatri Patel</title>
     <meta name="description" content="Yatri Patel's resume." />
-    <!-- The résumé lives on Drive. This route exists so that a bookmark, a
-         cached nav or an old link still arrives there instead of a 404. -->
-    <meta
-      http-equiv="refresh"
-      content="0; url=https://drive.google.com/file/d/1wvj6SUy0yAgU5WAK5NIJmmLXf9XxstLC/view?usp=sharing"
-    />
-    <link rel="canonical" href="https://drive.google.com/file/d/1wvj6SUy0yAgU5WAK5NIJmmLXf9XxstLC/view?usp=sharing" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -25,11 +18,24 @@
     <main>
       <section class="page">
         <h1 class="page-title">resume</h1>
-        <p class="page-lede">taking you to the résumé on google drive&hellip;</p>
-        <p class="page-lede">
+        <p class="page-lede">the short version, on one page.</p>
+
+        <div class="pdf-frame">
+          <object data="../assets/resume.pdf" type="application/pdf">
+            <!-- Shown when the browser will not render a PDF inline, which is
+                 most phones. -->
+            <div class="pdf-missing">
+              <p>your browser is not showing the pdf inline.</p>
+              <p><a href="../assets/resume.pdf" target="_blank" rel="noopener">open it in a new tab</a></p>
+            </div>
+          </object>
+        </div>
+
+        <p class="page-note">
+          <a href="../assets/resume.pdf" download="Yatri-Patel-Resume.pdf">download the pdf</a>
+          &nbsp;·&nbsp;
           <a href="https://drive.google.com/file/d/1wvj6SUy0yAgU5WAK5NIJmmLXf9XxstLC/view?usp=sharing"
-             target="_blank" rel="noopener">open it here</a>
-          if nothing happens.
+             target="_blank" rel="noopener">open in google drive</a>
         </p>
       </section>
     </main>

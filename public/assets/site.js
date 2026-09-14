@@ -1,5 +1,5 @@
 /*
- * Shared chrome for the static pages (works, playground, about).
+ * Shared chrome for the static pages (works, playground, about, resume).
  *
  * Each page sets `data-page` on <body>; this renders the nav pill and the
  * footer from the one list below, so a route is added in one place. The
@@ -26,13 +26,7 @@
     { id: "works", label: "WORKS", href: SITE + "works/" },
     { id: "playground", label: "PLAYGROUND", href: SITE + "playground/" },
     { id: "about", label: "ABOUT", href: SITE + "about/" },
-    /* The résumé lives on Drive, so this one leaves the site. */
-    {
-      id: "resume",
-      label: "RESUME",
-      href: "https://drive.google.com/file/d/1wvj6SUy0yAgU5WAK5NIJmmLXf9XxstLC/view?usp=sharing",
-      external: true,
-    },
+    { id: "resume", label: "RESUME", href: SITE + "resume/" },
   ];
 
   var SOCIAL = [
