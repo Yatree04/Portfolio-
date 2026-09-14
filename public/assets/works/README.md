@@ -19,11 +19,9 @@ back to that project's embed, so the page is never broken.
 The cover box is 602 x 399.2 (a 1.508 ratio) and the image is cropped to fill
 it, so anything roughly 3:2 and 1200px wide or more looks right.
 
-Two things still guessed rather than known:
+Still missing: the eyebrow for Paalan, Unicorn Makers and the Design Degree
+Show. The design carries the same placeholder line on every tile, so the ones
+filled in here come from the covers themselves rather than from it.
 
-- Which Behance project is Unicorn Makers and which is the Design Degree
-  Show. They are the two ids that were not identified — 247432273 and
-  253628357 — paired in that order.
-- The eyebrow for Paalan, Unicorn Makers and the Design Degree Show. The
-  design carries the same placeholder line on every tile, so the ones that
-  are filled in here come from the covers themselves rather than from it.
+Every project is now paired with its gallery: 253628357 is DDS'26 Event
+Branding, which left 247432273 as Unicorn Makers.

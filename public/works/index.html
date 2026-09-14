@@ -72,15 +72,18 @@
         }
 
         projects.forEach(function (project, i) {
-          /* an embed is interactive and links to Behance on its own, so those
-             cards are plain containers rather than anchors */
-          var card = document.createElement(project.embed ? 'div' : 'a');
+          /* A tile with cover art is a link, the way the design has it. One
+             showing a Behance embed instead is a plain container: the embed
+             is interactive and carries its own link out, and an iframe inside
+             an anchor swallows the click anyway. */
+          var isLink = !!(project.url && project.image);
+          var card = document.createElement(isLink ? 'a' : 'div');
           card.className = 'card';
           card.style.setProperty('--order', i);   /* keeps source order when the
                                                      grid collapses to one column */
-          if (!project.embed) {
-            card.href = project.url || '#';
-            if (/^https?:/.test(card.getAttribute('href'))) {
+          if (isLink) {
+            card.href = project.url;
+            if (/^https?:/.test(project.url)) {
               card.target = '_blank';
               card.rel = 'noopener';
             }
@@ -111,7 +114,9 @@
           set('.card-title', project.title);
           set('.card-desc', project.description);
 
-          /* If the cover file is not there yet, show what we do have. */
+          /* If the cover file is not there yet, show what we do have. The
+             tile stops being a link at that point, so the embed inside it is
+             not an interactive element nested in an anchor. */
           var cover = card.querySelector('.card-media img');
           if (cover) {
             cover.addEventListener('error', function () {
@@ -119,6 +124,11 @@
               box.innerHTML = project.embed
                 ? iframeFor(project)
                 : '<div class="placeholder"></div>';
+              if (project.embed) {
+                card.removeAttribute('href');
+                card.removeAttribute('target');
+                card.removeAttribute('rel');
+              }
             });
           }
 

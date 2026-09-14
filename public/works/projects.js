@@ -82,7 +82,7 @@ window.WORKS_PROJECTS = [
     title: "Enabling Novice Users to make UPI Payments",
   },
   {
-    // 274:5274 — the embed pairing here is a guess, see README
+    // 274:5274 — 247432273 by elimination, once 253628357 was named DDS'26
     image: "../assets/works/unicorn-makers.png",
     embed: "https://www.behance.net/embed/project/247432273?ilo0=1",
     url: "https://www.behance.net/gallery/247432273",
@@ -90,10 +90,10 @@ window.WORKS_PROJECTS = [
     title: "Unicorn Makers",
   },
   {
-    // 274:5280 — the embed pairing here is a guess, see README
+    // 274:5280
     image: "../assets/works/design-degree-show.png",
     embed: "https://www.behance.net/embed/project/253628357?ilo0=1",
-    url: "https://www.behance.net/gallery/253628357",
+    url: "https://www.behance.net/gallery/253628357/DDS26-Event-Branding",
     eyebrow: "",
     title: "Design Degree Show \u201826 | Event Branding",
   },
