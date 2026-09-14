@@ -44,6 +44,7 @@ The information architecture, as built:
 | `/playground/` | Coming soon                          | `public/playground/`              |
 | `/about/`      | About                                | `public/about/`                   |
 | RESUME (nav)   | Leaves for the résumé on Drive       | `public/assets/site.js`           |
+| `/resume/`     | Forwards to that same Drive link     | `public/resume/`                  |
 
 Onboarding and the mailbox are the React app; the others are plain HTML under
 `public/`, copied into `dist` untouched. RESUME is not a page — it is an
