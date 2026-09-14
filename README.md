@@ -17,7 +17,13 @@ npm run preview
 ```
 
 Pushing to `main` builds and deploys to GitHub Pages
-(`.github/workflows/static.yml`). `public/CNAME` keeps the custom domain.
+(`.github/workflows/static.yml`), which serves the site at yatripatel.in.
+`public/CNAME` carries the domain into the deployed artifact.
+
+The build uses a relative base, so the same output works at the domain root
+and at yatree04.github.io/Portfolio-/ without reconfiguring anything. Links
+inside the React app find the site root at runtime (`src/routes.ts`), and the
+static pages reference `../assets/...` rather than `/assets/...`.
 
 ## The flow
 

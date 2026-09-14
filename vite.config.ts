@@ -4,11 +4,12 @@ import tailwindcss from "@tailwindcss/vite";
 
 export default defineConfig({
   /**
-   * GitHub Pages serves this repo at yatree04.github.io/Portfolio-/, so the
-   * built app's asset URLs need that prefix. Change this to "/" if the site
-   * ever moves back to a domain root (and restore public/CNAME with it).
+   * Relative, so the build does not care where it is mounted: it works at
+   * yatree04.github.io/Portfolio-/ and at the root of a custom domain
+   * without rebuilding. Asset URLs come out relative to each document, and
+   * the routes in src/routes.ts find the site root at runtime.
    */
-  base: "/Portfolio-/",
+  base: "./",
   plugins: [react(), tailwindcss()],
   build: {
     outDir: "dist",
